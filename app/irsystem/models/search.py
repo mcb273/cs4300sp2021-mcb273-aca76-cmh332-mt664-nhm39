@@ -10,6 +10,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import normalize
 import time
 import math
+import requests
+import distance
 
 
 def write_csv_to_json(csv_path="ski_reviews.csv", json_path="ski_reviews.json"):
