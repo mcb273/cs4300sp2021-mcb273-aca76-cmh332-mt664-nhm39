@@ -7,16 +7,37 @@ project_name = "Ski Resort Recommendations"
 net_id = "Ava Anderson: aca76, Michael Behrens: mcb273, Cameron Haarmann: cmh332, Nicholas Mohan: nhm39, Megan Tormey: mt664"
 
 
+def max_distance(s):
+    # distance is a string either x-y or x+
+    if "-" in s:
+        lst = s.split("-")
+        return int(lst[1])
+    else:
+        return int(s[:s.index("+")])
+
+
+def get_version():
+    v = request.args.get('version')
+    if not v:
+        return 2
+    else:
+        return int(v)
+
+
 @irsystem.route('/', methods=['GET'])
 def search():
-    # query = request.args.get('search')
     query = request.args.get('description')
+    version = get_version()
+    location = request.args.get('location')
+    d = request.args.get('distance')
+    if d:
+        d = max_distance(d)
     if not query:
         data = []
         output_message = ''
     else:
         output_message = "Your search: " + query
         ski_dict = load_data()
-        data = search_q(query, ski_dict)
-    # return render_template('search.html', name=project_name, netid=net_id, output_message=output_message, data=data)
+        data = search_q(query, ski_dict, version=version, location=location,
+                        distance=d)
     return render_template('front-end.html', data=data)

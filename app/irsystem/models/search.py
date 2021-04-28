@@ -11,7 +11,7 @@ from sklearn.preprocessing import normalize
 import time
 import math
 import requests
-import distance
+import app.irsystem.models.distance as dist
 
 
 def write_csv_to_json(csv_path="ski_reviews.csv", json_path="ski_reviews.json"):
@@ -210,22 +210,16 @@ def most_sim(sim_mat, ski_index_to_site, rev_by_loc):
         count += 1
     # sim is a list of tuples: (similarity score, area name)
     x = sorted(sim, key=lambda x: x[0], reverse=True)
-    top_3_rankings = x[1:4]
-    top_3_locs = [a[1] for a in top_3_rankings]
+    # top_3_rankings = x[1:4]
+    # top_3_locs = [a[1] for a in top_3_rankings]
+    # return (top_3_locs)
 
-    out = '''
-
-The three ski resorts we think you will like best are...
-
-    1. {} located in
-    2. {} located in
-    3. {} located in
-'''
-
-    return (top_3_locs)
+    # return a list of (score, area name) in descending order of similarity
+    # the first element of x is the query, so eliminate it
+    return x[1:]
 
 
-def search_q(query, ski_dict):
+def search_1(query, ski_dict):
     vectorizer = build_vectorizer()
     reviews_by_loc = pre_vectorize(query, ski_dict)
     ski_site_to_index1 = ski_site_to_index(reviews_by_loc)
@@ -257,3 +251,33 @@ def get_results_from_sim_vector(sim_vect, index_to_area_name):
     print(np.sum([tup[0] == 0 for tup in replace]))
     avg = average_sim_vect_by_area(replace, index_to_area_name)
     return sorted(avg, key=lambda x: x[1], reverse=True)
+
+
+with open("dataset/skiing/area_name_to_state.json", "r") as f:
+    area_name_to_state = json.load(f)
+
+
+def search_2(query, ski_dict, location, distance):
+    scores = search_1(query, ski_dict)
+    area_to_distance = dist.getDistanceForAreas(location)
+    results = [{
+        "area_name": area_name,
+        "state": area_name_to_state[area_name],
+        "distance":area_to_distance[area_name],
+        "score": score
+    }
+        for score, area_name in scores if area_to_distance[area_name] <= distance]
+    return results
+
+
+def search_q(query, ski_dict, version, location=None, distance=None):
+    if version == 1:
+        data = search_1(query, ski_dict)
+        data = [tup[1] for tup in data]
+        return data[:3]
+    elif version == 2:
+        assert (location is not None and distance is not None)
+        data = search_2(query, ski_dict, location, distance)
+        return data[:min(5, len(data))]
+    else:
+        raise NotImplementedError

@@ -2,7 +2,6 @@ import json
 import requests
 from geopy.geocoders import Nominatim
 
-
 geolocator = Nominatim(user_agent="skiresortrecommendations")
 
 
@@ -46,4 +45,9 @@ def getDistanceForAreas(query):
         return None
 
 
-# dists = getDistanceForAreas("hasbrouck heights new jersey")
+def sortAreasByDistance(area_to_distance):
+    # area_to_distance is a dict with keys equal to area names
+    #   and values equal to distances
+    # returns a sorted list of pairs (area, dist) sorted by increasing distance
+    result = [(area, dist) for area, dist in area_to_distance.items()]
+    return sorted(result, key=lambda x: x[1])
