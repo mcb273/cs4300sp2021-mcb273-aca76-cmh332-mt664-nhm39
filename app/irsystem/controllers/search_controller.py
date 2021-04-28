@@ -37,7 +37,7 @@ def search():
         output_message = ''
     else:
         output_message = "Your search: " + query
-        ski_dict = load_data()
-        data = search_q(query, ski_dict, version=version, location=location,
+        # ski_dict = load_data()
+        data = search_q(query, version=version, location=location,
                         distance=d)
     return render_template('front-end.html', data=data)
