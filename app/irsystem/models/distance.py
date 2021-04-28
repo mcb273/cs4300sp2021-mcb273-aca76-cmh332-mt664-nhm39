@@ -29,7 +29,7 @@ def getDistance(source, locs):
     return [(metersToMiles(distances[i]), locs[i][2]) for i in range(len(locs))]
 
 
-with open("app/irsystem/models/locations.json", "r") as f:
+with open("dataset/skiing/locations.json", "r") as f:
     d = json.load(f)
     locations = [(lst[0], lst[1], area_name)
                  for area_name, lst in d['area_name_to_location'].items()]
