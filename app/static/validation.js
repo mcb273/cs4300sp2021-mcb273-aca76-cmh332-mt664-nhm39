@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-  $("#resort-recommendations").on("submit", function () {
+  $("#resort-recommendations").on("submit", function (e) {
 
     var valid = true;
 
@@ -23,6 +23,12 @@ $(document).ready(function() {
     } else {
       $("#descriptionError").removeClass("hidden");
       valid = false;
+    }
+
+    if( valid==true ) {
+      e.preventDefault();
+      $("#inputs").hide();
+      $("#results").show();
     }
 
     return valid;

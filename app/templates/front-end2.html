@@ -8,12 +8,19 @@
   <!-- <link rel="stylesheet" type="text/css" href="/static/bootstrap.min.css" />
   <link rel="stylesheet" type="text/css" href="/static/bootstrap-theme.min.css" /> -->
   <link href="static/main2.css" type="text/css" rel="stylesheet" />
-  <script src="/static/jquery-3.4.1.min.js" type="text/javascript"></script>
-  <script src="/static/validation.js" type="text/javascript"></script>
+  <script src="static/jquery-3.4.1.min.js" type="text/javascript"></script>
+  <script src="static/validation.js" type="text/javascript"></script>
 
 </head>
 
 <body>
+
+  <nav>
+    <ul>
+      <li><a href= "front-end.html">Prototype 1</a></li>
+      <li><a href= "front-end2.html">Prototype 2</a></li>
+    </ul>
+  </nav>
 
   <div class="container-fluid">
     <div class="row top">
@@ -24,6 +31,8 @@
       </div>
 
       <div class="col-lg-6 bg-white main">
+
+        <div id = "inputs">
         <h2>FIND A RESORT.</h2>
         <p class="explain">Planning a ski trip? Use our comprehensive guide to find your next US ski trip location.
           Enter your location and general interests below to get expert recommendations!</p>
@@ -85,22 +94,28 @@
             <button class="button-default" type="submit">Get Results</button>
           </div>
 
-          <!-- {% if data %}
+        </form>
+
+        </div>
+
+        <div id= 'results'>
+
+          {% if data %}
           <div class="row">
             <div class="col-lg-12 bg-white center">
               <h4 style="font-weight: bold;">Where You Should Spend Your
                 Mountain Time:</h4>
             </div>
-          </div> -->
+          </div>
 
-          <!-- {% for d in data %}
+          {% for d in data %}
           <div class="row center">
             {{d}}
           </div>
           {% endfor %}
-          {% endif %} -->
+          {% endif %}
 
-      </form>
+        </div>
 
     <h6> Copyright: mcb273-aca76-cmh332-mt664-nhm39 </h6>
 
