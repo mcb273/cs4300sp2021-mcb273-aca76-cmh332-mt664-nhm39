@@ -39,7 +39,7 @@ color: #4285F4;
 
 
 body {
-    background-image: url('/static/skis_background.png');
+    background-image: url('../static/skis_background.png');
     font-family: "Lucida Console", "Courier New", monospace;
 }
 

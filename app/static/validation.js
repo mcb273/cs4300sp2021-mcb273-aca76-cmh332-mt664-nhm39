@@ -29,6 +29,7 @@ $(document).ready(function() {
       e.preventDefault();
       $("#inputs").hide();
       $("#results").show();
+      $("#results").removeClass("hidden");
     }
 
     return valid;
