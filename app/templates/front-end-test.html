@@ -69,22 +69,18 @@
 
             {% for d in data %}
             <br>
-            <div>
+            <div class ="bg-results">
               <h5>{{d['state']}}</h5>
               <h5>{{d['area_name']}}</h5>
               <h6>{{d['rating']}}</h6>
               <h6>{{d['sentiment']}}</h6>
-              <button type="button" class="collapsible">Open Collapsible</button>
-              <div class="content">
-                <h6>Postive Reviews:</h6>
-                <p>{{d['most_positive_reviews'][0]}}</p>
-                <p>{{d['most_positive_reviews'][1]}}</p>
-                <p>{{d['most_positive_reviews'][2]}}</p>
+              <!-- <button type="button" class="collapsible">Open Collapsible</button>
+              <div class="content"> -->
+              <h6>Postive Review:</h6>
+              <p>{{d['most_positive_reviews'][0]}}</p>
 
-                <h6>Negative Reviews:</h6>
-                <p>{{d['most_negative_reviews'][0]}}</p>
-                <p>{{d['most_negative_reviews'][1]}}</p>
-                <p>{{d['most_negative_reviews'][2]}}</p>
+              <h6>Negative Review:</h6>
+              <p>{{d['most_negative_reviews'][0]}}</p>
               </div>
 
             </div>
