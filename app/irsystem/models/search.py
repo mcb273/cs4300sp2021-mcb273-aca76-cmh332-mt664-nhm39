@@ -182,7 +182,7 @@ class Model1:
         # the first element of x is the query, so eliminate it
         return x[1:]
 
-    def search(self, query, location, distance):
+    def search(self, query, location=None, distance=None):
         vectorizer = build_vectorizer()
         self.load_data()
         reviews_by_loc = self.pre_vectorize(query)
@@ -191,7 +191,7 @@ class Model1:
         tfidf_mat, index_to_vocab, vocab_to_index = self.vectorize(
             reviews_by_loc, vectorizer)
         sim_mat = self.build_sims_cos(tfidf_mat)
-        results = self.most_sim(sim_mat, ski_index_to_site1, ski_dict)
+        results = self.most_sim(sim_mat, ski_index_to_site1, self.ski_dict)
         return results
 
 
@@ -258,12 +258,25 @@ class Model2:
 
 with open("dataset/skiing/area_name_to_state.json", "r") as f:
     area_name_to_state = json.load(f)
+with open("dataset/skiing/area_name_to_top_sentiment.json", "r") as f:
+    area_name_to_top_sentiment = json.load(f)
+with open("dataset/skiing/reviews.json", "r") as f:
+    dataset = json.load(f)
+with open('dataset/skiing/area_name_to_rating_and_sentiment.json', 'r') as f:
+    area_name_to_rating_and_sentiment = json.load(f)
+
+
+def get_top_reviews(area_name, isPositive):
+    key = "top_10_positive" if isPositive else "top_10_negative"
+    lst = area_name_to_top_sentiment[area_name][key]
+    # list of dicts {row_number, sentiment:{}}
+    return [{"sentiment_score": d['sentiment']["compound"], "review":dataset[d['row_number']]} for d in lst]
 
 
 def search_q(query, version, location=None, distance=None):
     if version == 1:
         model = Model1()
-        data = model.search(query, ski_dict)
+        data = model.search(query)
         data = [tup[1] for tup in data]
         return data[:3]
     elif version == 2:
@@ -282,7 +295,11 @@ def search_q(query, version, location=None, distance=None):
         "state": area_name_to_state[area_name],
         "distance":area_to_distance[area_name],
         "score": score,
-        "reviews": area_name_to_sorted_reviews[area_name][:3]
+        "reviews": area_name_to_sorted_reviews[area_name][:3],
+        "sentiment": area_name_to_rating_and_sentiment[area_name]['average_sentiment'],
+        "rating": area_name_to_rating_and_sentiment[area_name]['average_rating'],
+        "most_positive_reviews": get_top_reviews(area_name, True),
+        "most_negative_reviews": get_top_reviews(area_name, False)
     }
         for area_name, score in scores if area_to_distance[area_name] <= distance]
     return results[:min(5, len(results))]
