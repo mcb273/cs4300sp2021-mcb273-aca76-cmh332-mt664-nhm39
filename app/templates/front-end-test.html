@@ -9,7 +9,6 @@
   <link rel="stylesheet" type="text/css" href="/static/bootstrap-theme.min.css" /> -->
   <link href="../static/main2.css" type="text/css" rel="stylesheet" />
   <script src="../static/jquery-3.4.1.min.js" type="text/javascript"></script>
-  <!-- <script src="../static/validation.js" type="text/javascript"></script> -->
 
 </head>
 
@@ -41,8 +40,6 @@
         valid = false;
       }
 
-      //document.getElementById("validoutput").innerHTML = valid;
-
       return valid;
 
     });
@@ -53,24 +50,16 @@
 
 <body>
 
-  <nav>
-    <ul>
-      <li><a href="front-end.html">Prototype 1</a></li>
-      <li><a href="front-end-test.html">Prototype 2</a></li>
-    </ul>
-  </nav>
-
   <div class="container-fluid">
     <div>
       <div class="col-lg-5">
-        <img src="../static/logo.jpeg" class="logo" alt="Mountain logo" />
+        <a href="/"><img src="../static/logo.jpeg" class="logo" alt="Mountain logo" /></a>
 
       </div>
 
       <div class="col-lg-6 bg-white main">
 
 
-        <!-- <div id="validoutput">Valid:</div> -->
         {% if data %}
         <div id="results" class=''>
           <h4 style="font-weight: bold;">Where You Should Spend Your
@@ -100,6 +89,16 @@
 
           <form id="resort-recommendations" novalidate>
             <div class="landd">
+
+              <div class="version-number">
+                Prototype Version:
+                <input type="radio" name="version" value="1" />
+                <label for="v1">V1</label>
+
+                <input type="radio" name="version" value="2" checked />
+                <label for="v2">V2</label>
+              </div>
+
               <div class="location_all">
                 <div class="input location">
                   <label for="location">*Location:</label>
@@ -129,7 +128,7 @@
                     <option value="25">25 mi</option>
                     <option value="50">50 mi</option>
                     <option value="100">100 mi</option>
-                    <option value="500">500 mi mi</option>
+                    <option value="500">500 mi</option>
                     <option value="1000+">1000+ mi</option>
                   </select>
                 </div>
