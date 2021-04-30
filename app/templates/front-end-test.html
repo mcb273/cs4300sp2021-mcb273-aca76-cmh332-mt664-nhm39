@@ -80,7 +80,13 @@
 
             {% for d in data %}
             <br>
-            <p>{{d}}</p>
+            <div>
+              <h5>{{d['state']}}</h5>
+              <h5>{{d['area_name']}}</h5>
+              <h6>{{d['rating']}}</h6>
+              <h6>{{d['sentiment']}}</h6>
+              <h6>{{d['most_positive_reviews']}}</h6>
+            </div>
             {% endfor %}
 
           </form>
