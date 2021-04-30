@@ -76,7 +76,15 @@
               <h6>{{d['sentiment']}}</h6>
               <button type="button" class="collapsible">Open Collapsible</button>
               <div class="content">
-                <h6>{{d['most_positive_reviews']}}</h6>
+                <h6>Postive Reviews:</h6>
+                <p>{{d['most_positive_reviews'][0]}}</p>
+                <p>{{d['most_positive_reviews'][1]}}</p>
+                <p>{{d['most_positive_reviews'][2]}}</p>
+
+                <h6>Negative Reviews:</h6>
+                <p>{{d['most_negative_reviews'][0]}}</p>
+                <p>{{d['most_negative_reviews'][1]}}</p>
+                <p>{{d['most_negative_reviews'][2]}}</p>
               </div>
 
             </div>
