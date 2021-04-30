@@ -9,9 +9,47 @@
   <link rel="stylesheet" type="text/css" href="/static/bootstrap-theme.min.css" /> -->
   <link href="../static/main2.css" type="text/css" rel="stylesheet" />
   <script src="../static/jquery-3.4.1.min.js" type="text/javascript"></script>
-  <script src="../static/validation.js" type="text/javascript"></script>
+  <!-- <script src="../static/validation.js" type="text/javascript"></script> -->
 
 </head>
+
+<script>
+  $(document).ready(function () {
+
+    $("#resort-recommendations").on("submit", function (e) {
+
+      var valid = true;
+
+      if ($("#location").prop("validity").valid) {
+        $("#locationError").addClass("hidden");
+      } else {
+        $("#locationError").removeClass("hidden");
+        valid = false;
+      }
+
+      if ($("#distance").prop("validity").valid) {
+        $("#distanceError").addClass("hidden");
+      } else {
+        $("#distanceError").removeClass("hidden");
+        valid = false;
+      }
+
+      if ($("#description").prop("validity").valid) {
+        $("#descriptionError").addClass("hidden");
+      } else {
+        $("#descriptionError").removeClass("hidden");
+        valid = false;
+      }
+
+      //document.getElementById("validoutput").innerHTML = valid;
+
+      return valid;
+
+    });
+
+  });
+
+</script>
 
 <body>
 
@@ -31,6 +69,23 @@
 
       <div class="col-lg-6 bg-white main">
 
+
+        <!-- <div id="validoutput">Valid:</div> -->
+        {% if data %}
+        <div id="results" class=''>
+          <h4 style="font-weight: bold;">Where You Should Spend Your
+            Mountain Time:</h4>
+
+          <form class="form-inline global-search">
+
+            {% for d in data %}
+            <br>
+            <p>{{d}}</p>
+            {% endfor %}
+
+          </form>
+        </div>
+        {% else %}
         <div id="inputs">
 
           <h2>FIND A RESORT.</h2>
@@ -96,20 +151,7 @@
           </form>
 
         </div>
-
-        <div id="results" class=''>
-          <h4 style="font-weight: bold;">Where You Should Spend Your
-            Mountain Time:</h4>
-
-          <form class="form-inline global-search">
-            {% if data %}
-            {% for d in data %}
-            <br>
-            <p>{{d}}</p>
-            {% endfor %}
-            {% endif %}
-          </form>
-        </div>
+        {% endif %}
 
         <h6> Copyright: mcb273-aca76-cmh332-mt664-nhm39 </h6>
 
