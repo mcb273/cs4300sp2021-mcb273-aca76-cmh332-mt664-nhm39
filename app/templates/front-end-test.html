@@ -74,7 +74,11 @@
               <h5>{{d['area_name']}}</h5>
               <h6>{{d['rating']}}</h6>
               <h6>{{d['sentiment']}}</h6>
-              <h6>{{d['most_positive_reviews']}}</h6>
+              <button type="button" class="collapsible">Open Collapsible</button>
+              <div class="content">
+                <h6>{{d['most_positive_reviews']}}</h6>
+              </div>
+
             </div>
             {% endfor %}
 
