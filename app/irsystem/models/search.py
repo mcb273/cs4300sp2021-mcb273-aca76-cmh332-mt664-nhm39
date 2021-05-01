@@ -293,11 +293,11 @@ def search_q(query, version, location=None, distance=None):
     results = [{
         "area_name": area_name,
         "state": area_name_to_state[area_name],
-        "distance":area_to_distance[area_name],
-        "score": score,
+        "distance":round(area_to_distance[area_name]),
+        "score": round(score*100, 2),
         "reviews": area_name_to_sorted_reviews[area_name][:3],
-        "sentiment": area_name_to_rating_and_sentiment[area_name]['average_sentiment'],
-        "rating": area_name_to_rating_and_sentiment[area_name]['average_rating'],
+        "sentiment": round(float(area_name_to_rating_and_sentiment[area_name]['average_sentiment']), 2),
+        "rating": round(float(area_name_to_rating_and_sentiment[area_name]['average_rating']), 2),
         "most_positive_reviews": get_top_reviews(area_name, True),
         "most_negative_reviews": get_top_reviews(area_name, False)
     }
