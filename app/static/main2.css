@@ -274,6 +274,7 @@ h6{
     border: 1px solid black;
     font-size: 15px;
     border-radius: 5px;
+    margin: 10px;
 }
 
 .result-row {
@@ -300,8 +301,11 @@ h6{
     text-align: center;
 }
 
-.bar {
-    display: inline;
+.detail-container {
+    flex-grow: 1;
+    max-height: 300px;
+    overflow: scroll;
+    border: 1px solid black;
 }
 
 h4 {
