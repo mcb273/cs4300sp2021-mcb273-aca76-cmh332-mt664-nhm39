@@ -96,8 +96,10 @@ h2{
     width: 540px;
     padding: 15px;
     border-radius: 20px;
-    margin-left: 30%;
+    /*margin-left: 10%; */
     padding: 50px;
+    display: flex;
+    flex-direction: column;
 
 }
 .top {
@@ -213,7 +215,7 @@ label {
 
 h6{
   /* background-color: white; */
-  margin-bottom: 80%;
+  /*margin-bottom: 80%;*/
   margin-left: 25%;
   /* padding: 2px;
   padding-right: 0px; */
