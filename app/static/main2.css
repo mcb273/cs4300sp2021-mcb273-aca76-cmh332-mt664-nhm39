@@ -81,10 +81,11 @@ h2{
     background-color: white;
     padding: 10px;
 }
+
 .bg-white {
     background-color: white;
     opacity: .85;
-    min-height: 500px;
+    height: 550px;
     width: 570px;
     padding: 15px;
     border-radius: 20px;
