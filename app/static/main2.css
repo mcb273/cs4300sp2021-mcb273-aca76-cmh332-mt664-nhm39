@@ -92,6 +92,20 @@ h2{
     padding: 50px;
 
 }
+
+.bg-results {
+    background-color: lightgrey;
+    opacity: .85;
+    height: auto;
+    width: 540px;
+    padding: 15px;
+    border-radius: 20px;
+    /*margin-left: 10%; */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+
+}
 .top {
     padding-top: 10vh;
 }
