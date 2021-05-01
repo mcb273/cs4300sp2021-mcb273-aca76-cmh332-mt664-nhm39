@@ -29,7 +29,11 @@ margin-bottom:0; */
 
 body {
     background-image: url('../static/skis.jpg');
-    font-family: "Arial Black";
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* font-family: "Arial Black"; */
+    font-family: 'Lato', sans-serif;
 }
 
 nav ul {
@@ -80,7 +84,7 @@ h2{
 .bg-white {
     background-color: white;
     opacity: .85;
-    height: 500px;
+    min-height: 500px;
     width: 570px;
     padding: 15px;
     border-radius: 20px;
@@ -193,7 +197,31 @@ label {
     letter-spacing: 3px;
 }
 
+.button-small {
+    height: 22px;
+    background-color: #B70B21;
+    width: 100px;
+    text-align: center;
+    border: none;
+    color: white;
+    display: inline-block;
+    text-decoration: none;
+    line-height: 22px;
+    transition: 0.25s linear;
+    margin-left: 5px;
+    margin-right: 5px;
+    font-family: 'Lato', sans-serif;
+    border-radius: 11px;
+    letter-spacing: 1px;
+}
+
 .button-default:hover {
+    background-color: black;
+    transition: 0.25s linear;
+    cursor: pointer;
+}
+
+.button-small:hover {
     background-color: black;
     transition: 0.25s linear;
     cursor: pointer;
@@ -201,8 +229,8 @@ label {
 
 h6{
   /* background-color: white; */
-  margin-bottom: 80%;
-  margin-left: 25%;
+  /* margin-bottom: 80%;
+  margin-left: 25%; */
   /* padding: 2px;
   padding-right: 0px; */
   opacity: .8;
@@ -226,4 +254,42 @@ h6{
   display: none;
   overflow: hidden;
   background-color: #f1f1f1;
+}
+
+.result {
+    border: 1px solid black;
+    font-size: 15px;
+    border-radius: 5px;
+}
+
+.result-row {
+    display: flex;
+    flex-direction: row;
+    margin: 10px;
+}
+
+.resort-container {
+    flex-grow: 2;
+}
+.resort-name {
+    font-size: 20px;
+    color: black;
+    font-weight: bold;
+    text-transform: capitalize;
+}
+.score-container {
+    flex-grow: 1;
+    text-align: right;
+}
+.bottom-container {
+    width: 33%;
+    text-align: center;
+}
+
+.bar {
+    display: inline;
+}
+
+h4 {
+    font-size: 20px;
 }
