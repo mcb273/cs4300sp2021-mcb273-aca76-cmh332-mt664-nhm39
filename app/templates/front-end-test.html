@@ -75,6 +75,8 @@
         <h4 style="font-weight: bold;">Where You Should Spend Your Mountain Time:</h4>
 
         {% for d in data %}
+        {% if d['version'] == 2 %}
+
         <div class="result">
 
           <div class="result-row">
@@ -134,6 +136,9 @@
 
 
         </div>
+        {% else %}
+        <div>{{ d }}</div>
+        {% endif %}
         {% endfor %}
 
 
@@ -147,15 +152,6 @@
 
           <form id="resort-recommendations" novalidate>
             <div class="landd">
-
-              <div class="version-number">
-                Prototype Version:
-                <input type="radio" name="version" value="1" />
-                <label for="v1">V1</label>
-
-                <input type="radio" name="version" value="2" checked />
-                <label for="v2">V2</label>
-              </div>
 
               <div class="location_all">
                 <div class="input location">
@@ -205,6 +201,19 @@
                   <input type="text" id="description" placeholder='Write a review for your ideal ski resort.'
                     name="description" required>
                 </div>
+              </div>
+            </div>
+
+            <div class="version-number center">
+              Prototype Version:<br>
+              <div>
+                <input type="radio" name="version" value="1" />
+                <label for="v1">V1</label>
+              </div>
+
+              <div>
+                <input type="radio" name="version" value="2" checked />
+                <label for="v2">V2</label>
               </div>
             </div>
 

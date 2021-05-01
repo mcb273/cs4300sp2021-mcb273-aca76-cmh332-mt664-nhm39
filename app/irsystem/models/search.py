@@ -291,6 +291,7 @@ def search_q(query, version, location=None, distance=None):
         query, location, distance)
     area_to_distance = dist.getDistanceForAreas(location)
     results = [{
+        "version": version,
         "area_name": area_name,
         "state": area_name_to_state[area_name],
         "distance":round(area_to_distance[area_name]),
