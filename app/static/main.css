@@ -157,3 +157,10 @@ label {
     transition: 0.25s linear;
     cursor: pointer;
 }
+
+/* Results */
+
+.bg-results {
+  display: flex;
+  flex-direction: row;
+}
