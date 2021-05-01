@@ -9,3 +9,4 @@ vagrant/a4keypair.pem
 app/.DS_Store
 dataset/.DS_Store
 cs4300-env
+.DS_Store
