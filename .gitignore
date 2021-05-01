@@ -6,3 +6,6 @@ vagrant/site.retry
 vagrant/a4keypair.pem
 .idea/
 *.iml
+app/.DS_Store
+dataset/.DS_Store
+cs4300-env

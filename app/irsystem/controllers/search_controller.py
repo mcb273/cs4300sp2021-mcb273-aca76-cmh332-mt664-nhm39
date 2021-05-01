@@ -8,12 +8,12 @@ net_id = "Ava Anderson: aca76, Michael Behrens: mcb273, Cameron Haarmann: cmh332
 
 
 def max_distance(s):
-    # distance is a string either x-y or x+
-    if "-" in s:
-        lst = s.split("-")
-        return int(lst[1])
+    # distance is a string either x or x+
+    if "+" in s:
+        lst = s.split("+")
+        return int(lst[0])
     else:
-        return int(s[:s.index("+")])
+        return int(s)
 
 
 def get_version():
@@ -37,7 +37,6 @@ def search():
         output_message = ''
     else:
         output_message = "Your search: " + query
-        ski_dict = load_data()
-        data = search_q(query, ski_dict, version=version, location=location,
+        data = search_q(query, version=version, location=location,
                         distance=d)
-    return render_template('front-end.html', data=data)
+    return render_template('front-end-test.html', data=data)

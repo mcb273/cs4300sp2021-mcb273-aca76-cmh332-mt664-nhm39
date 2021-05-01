@@ -39,7 +39,7 @@ color: #4285F4;
 
 
 body {
-    background-image: url('/static/skis_background.png');
+    background-image: url('../static/skis_background.png');
     font-family: "Lucida Console", "Courier New", monospace;
 }
 
@@ -156,4 +156,11 @@ label {
     background-color: black;
     transition: 0.25s linear;
     cursor: pointer;
+}
+
+/* Results */
+
+.bg-results {
+  display: flex;
+  flex-direction: row;
 }

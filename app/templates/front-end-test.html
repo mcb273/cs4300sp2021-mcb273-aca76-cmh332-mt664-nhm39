@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ski Resort Recommendations</title>
+  <!-- <link rel="stylesheet" type="text/css" href="/static/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="/static/bootstrap-theme.min.css" /> -->
+  <link href="../static/main2.css" type="text/css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Lato:300" rel="stylesheet">
+  <script src="../static/jquery-3.4.1.min.js" type="text/javascript"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+
+<script>
+  $(document).ready(function () {
+
+    $("#resort-recommendations").on("submit", function (e) {
+
+      var valid = true;
+
+      if ($("#location").prop("validity").valid) {
+        $("#locationError").addClass("hidden");
+      } else {
+        $("#locationError").removeClass("hidden");
+        valid = false;
+      }
+
+      if ($("#distance").prop("validity").valid) {
+        $("#distanceError").addClass("hidden");
+      } else {
+        $("#distanceError").removeClass("hidden");
+        valid = false;
+      }
+
+      if ($("#description").prop("validity").valid) {
+        $("#descriptionError").addClass("hidden");
+      } else {
+        $("#descriptionError").removeClass("hidden");
+        valid = false;
+      }
+
+      return valid;
+
+    });
+
+  });
+
+</script>
+
+
+
+<body>
+
+  <div class="container-fluid">
+    <div>
+      <div class="col-lg-5">
+        <a href="/"><img src="../static/logo.jpeg" class="logo" alt="Mountain logo" /></a>
+      </div>
+
+      <div class="col-lg-6 bg-white main">
+
+
+        {% if data %}
+        <div id="results" class=''>
+          <h4 style="font-weight: bold;">Where You Should Spend Your
+            Mountain Time:</h4>
+
+          <!-- <form class="form-inline global-search"> -->
+
+          {% for d in data %}
+          <br>
+          <div class="result">
+            <div class="result-row">
+              <div class="resort-container">
+                <div class="resort-name">{{d['area_name'].replace("-", " ")}}</div>
+              </div>
+              <div class="score-container">
+                <div class="similarity-score">Score: {{d['score']}}</div>
+                {% for d in data %}
+                <br>
+                <div class="bg-results">
+                  <h5>{{d['state']}}</h5>
+                  <h5>{{d['area_name']}}</h5>
+                  <h5>{{d['rating']}}</h5>
+                  <div class="container">
+
+                    <!-- Button to Open the Modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                      Open modal
+                    </button>
+
+                    <!-- The Modal -->
+                    <div class="modal fade" id="myModal">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+
+                          <!-- Modal Header -->
+                          <div class="modal-header">
+                            <h4 class="modal-title">Modal Heading</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          </div>
+
+                          <!-- Modal body -->
+                          <div class="modal-body">
+                            <p>{{d['most_positive_reviews'][0]}}</p>
+                          </div>
+
+                          <!-- Modal footer -->
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="result-row">
+                  <div class="resort-container">
+                    <div class="state-name"><span style="text-transform: capitalize;">{{d['state']}}</span>
+                      ({{d['distance']}} miles away)</div>
+                  </div>
+                  <div class="score-container"></div>
+                </div>
+
+
+
+                <div class="result-row">
+                  <div class="bottom-container">
+                    Average Rating: {{d['rating']}}
+                  </div>
+                  <div class="bottom-container">
+                    Average Sentiment: {{d['sentiment']}}
+                  </div>
+                  <div class="bottom-container">
+                    <div class="button-small">Details</div>
+                  </div>
+                </div>
+
+                <!-- <p>{{d['most_positive_reviews'][0]}}</p>
+              <p>{{d['most_positive_reviews'][1]}}</p>
+              <p>{{d['most_positive_reviews'][2]}}</p> -->
+                <!-- <p>{{d['most_negative_reviews'][0]}}</p>
+              <p>{{d['most_negative_reviews'][1]}}</p>
+              <p>{{d['most_negative_reviews'][2]}}</p> -->
+
+              </div>
+              {% endfor %}
+
+              <!-- </form> -->
+              <!-- <h6>{{d['sentiment']}}</h6>
+              <button type="button" class="collapsible">Open Collapsible</button>
+              <div class="content"> -->
+              <!-- <h6>Postive Review:</h6>
+              <p>{{d['most_positive_reviews'][0]}}</p>
+              <h6>Negative Review:</h6>
+              <p>{{d['most_negative_reviews'][0]}}</p>
+              </div> -->
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div id="inputs">
+
+            <h2>FIND A RESORT.</h2>
+            <p class="explain">Planning a ski trip? Use our comprehensive guide to find your next US ski trip location.
+              Enter your location and general interests below to get expert recommendations!</p>
+
+            <form id="resort-recommendations" novalidate>
+              <div class="landd">
+
+                <div class="version-number">
+                  Prototype Version:
+                  <input type="radio" name="version" value="1" />
+                  <label for="v1">V1</label>
+
+                  <input type="radio" name="version" value="2" checked />
+                  <label for="v2">V2</label>
+                </div>
+
+                <div class="location_all">
+                  <div class="input location">
+                    <label for="location">*Location:</label>
+                    <div class="locationErrorMessage">
+                      <span class="errorContainer hidden" id="locationError">
+                        Please enter a location.
+                      </span>
+                    </div>
+                    <div class="box1">
+                      <input type="text" id="location" placeholder="City, State (i.e. Ithaca, NY)" name="location"
+                        required>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="input distance">
+                  <label for="distance" class="dist">*Max Distance:
+                  </label>
+                  <div class="distanceErrorMessage">
+                    <span class="errorContainer hidden" id="distanceError">
+                      Please select a distance.
+                    </span>
+                  </div>
+                  <div class="box dis">
+                    <select id="distance" name="distance" required>
+                      <option value="" disabled selected>Select a distance from your location</option>
+                      <option value="25">25 mi</option>
+                      <option value="50">50 mi</option>
+                      <option value="100">100 mi</option>
+                      <option value="500">500 mi</option>
+                      <option value="1000+">1000+ mi</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class='descriptionAll'>
+                <div class="input">
+                  <label for="description">*Description:</label>
+                  <div class="descriptionErrorMessage">
+                    <span class="errorContainer hidden" id="descriptionError">
+                      Please describe what you are looking for in a ski resort.
+                    </span>
+                  </div>
+                  <div class='box'>
+                    <input type="text" id="description" placeholder='Write a review for your ideal ski resort.'
+                      name="description" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="center">
+                <button class="button-default" type="submit">Get Results</button>
+              </div>
+            </form>
+
+          </div>
+          {% endif %}
+
+          <!-- <h6> Copyright: mcb273-aca76-cmh332-mt664-nhm39 </h6> -->
+
+        </div>
+      </div>
+    </div>
+
+</body>
+
+</html>
