@@ -39,4 +39,4 @@ def search():
         output_message = "Your search: " + query
         data = search_q(query, version=version, location=location,
                         distance=d)
-    return render_template('front-end-test.html', data=data)
+    return render_template('front_end_3.html', data=data)
