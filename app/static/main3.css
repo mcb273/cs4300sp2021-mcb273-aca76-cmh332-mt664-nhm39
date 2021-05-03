@@ -302,10 +302,10 @@ h6{
 }
 
 .detail-container {
-    flex-grow: 1;
-    max-height: 300px;
     overflow: scroll;
-    border: 1px solid black;
+    background-color: white;
+    padding: 10px;
+    border-radius: 18px;
 }
 
 h4 {
