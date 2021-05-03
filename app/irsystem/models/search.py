@@ -256,21 +256,24 @@ class Model2:
         return self.average_sim_vect_by_area(self.cos_sim_vect, self.index_to_area_name)
 
 
-with open("dataset/skiing/area_name_to_state.json", "r") as f:
-    area_name_to_state = json.load(f)
-with open("dataset/skiing/area_name_to_top_sentiment.json", "r") as f:
-    area_name_to_top_sentiment = json.load(f)
-with open("dataset/skiing/reviews.json", "r") as f:
-    dataset = json.load(f)
-with open('dataset/skiing/area_name_to_rating_and_sentiment.json', 'r') as f:
-    area_name_to_rating_and_sentiment = json.load(f)
+# with open("dataset/skiing/area_name_to_state.json", "r") as f:
+#     area_name_to_state = json.load(f)
+# with open("dataset/skiing/area_name_to_top_sentiment.json", "r") as f:
+#     area_name_to_top_sentiment = json.load(f)
+# with open("dataset/skiing/reviews.json", "r") as f:
+#     dataset = json.load(f)
+# with open('dataset/skiing/area_name_to_rating_and_sentiment.json', 'r') as f:
+#     area_name_to_rating_and_sentiment = json.load(f)
+
+with open('dataset/skiing/area_name_data.json', 'r') as f:
+    area_name_data = json.load(f)
 
 
-def get_top_reviews(area_name, isPositive):
-    key = "top_10_positive" if isPositive else "top_10_negative"
-    lst = area_name_to_top_sentiment[area_name][key]
-    # list of dicts {row_number, sentiment:{}}
-    return [{"sentiment_score": d['sentiment']["compound"], "review":dataset[d['row_number']]} for d in lst]
+# def get_top_reviews(area_name, isPositive):
+#     key = "top_10_positive" if isPositive else "top_10_negative"
+#     lst = area_name_to_top_sentiment[area_name][key]
+#     # list of dicts {row_number, sentiment:{}}
+#     return [{"sentiment_score": d['sentiment']["compound"], "review":dataset[d['row_number']]} for d in lst]
 
 
 def search_q(query, version, location=None, distance=None):
@@ -285,24 +288,29 @@ def search_q(query, version, location=None, distance=None):
         # data = search_2(query, ski_dict, location, distance)
         # return data[:min(5, len(data))]
     else:
+        # TODO put final prototype stuff here
         raise NotImplementedError
 
     scores, area_name_to_sorted_reviews = model.search(
         query, location, distance)
     area_to_distance = dist.getDistanceForAreas(location)
+    # TODO: area_to_distance can be none if query location doesn't return a location
+    if area_to_distance is None:
+        return [{"error": True}]
     results = [{
         "version": version,
         "area_name": area_name,
-        "state": area_name_to_state[area_name],
+        "state": area_name_data[area_name]["state"],
         "distance":round(area_to_distance[area_name]),
         "score": round(score*100, 2),
         "reviews": area_name_to_sorted_reviews[area_name][:3],
-        "sentiment": round(float(area_name_to_rating_and_sentiment[area_name]['average_sentiment']), 2),
-        "rating": round(float(area_name_to_rating_and_sentiment[area_name]['average_rating']), 2),
-        "most_positive_reviews": get_top_reviews(area_name, True),
-        "most_negative_reviews": get_top_reviews(area_name, False)
-    }
-        for area_name, score in scores if area_to_distance[area_name] <= distance]
+        "sentiment": round(float(area_name_data[area_name]['average_sentiment']), 2),
+        "rating": round(float(area_name_data[area_name]['average_rating']), 2),
+        "most_positive_reviews": area_name_data[area_name]['top_10_positive'],
+        "most_negative_reviews": area_name_data[area_name]['top_10_negative'],
+        "emotion_numbers": {"anger": 100, "sadness": 50, "joy": 200, "love": 25, "fear": 70, "surprise": 100},
+        "emotion_reviews": {em: area_name_to_sorted_reviews[area_name][0] for em in ["anger", "sadness", "joy", "love", "fear", "surprise"]}
+    } for area_name, score in scores if area_to_distance[area_name] <= distance]
     return results[:min(5, len(results))]
 
 
