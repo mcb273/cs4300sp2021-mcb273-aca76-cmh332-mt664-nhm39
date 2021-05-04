@@ -17,89 +17,93 @@
 
 
   <style>
-  @media (min-width: 1200px) {
-  .container {
-      max-width: 970px;
-  }
-  }
-  @media (min-width:400px){
-  .global-search {
-  padding: 20px 0;
-  text-align:center;
-  }
-  /* body {
+    @media (min-width: 1200px) {
+      .container {
+        max-width: 970px;
+      }
+    }
+
+    @media (min-width:400px) {
+      .global-search {
+        padding: 20px 0;
+        text-align: center;
+      }
+
+      /* body {
   padding-top: 15%;
   padding-bottom: 15px;
   } */
-  .global-search {
-  text-align:center;
-  padding:10px;
-  }
-  .global-search .form-control {
-  /* width:500px; */
-  }
-  .global-search * {
-  /* display:inline-block;
-  margin-bottom:0; */
-  }
-  }
+      .global-search {
+        text-align: center;
+        padding: 10px;
+      }
 
-  body {
+      .global-search .form-control {
+        /* width:500px; */
+      }
+
+      .global-search * {
+        /* display:inline-block;
+  margin-bottom:0; */
+      }
+    }
+
+    body {
       background-image: url('../static/skis.jpg');
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
       /* font-family: "Arial Black"; */
       font-family: 'Lato', sans-serif;
-  }
+    }
 
-  nav ul {
-    margin-left: 80%;
-    display: flex;
-    flex-direction: row;
-  }
+    nav ul {
+      margin-left: 80%;
+      display: flex;
+      flex-direction: row;
+    }
 
-  nav ul li{
-    list-style-type: none;
-    padding-right: 5px;
-    padding-left: 5px;
-  }
+    nav ul li {
+      list-style-type: none;
+      padding-right: 5px;
+      padding-left: 5px;
+    }
 
-  a {
-    font-family: Arial;
-    font-size: 11px;
-    color: black;
-  }
+    a {
+      font-family: Arial;
+      font-size: 11px;
+      color: black;
+    }
 
-  .main {
+    .main {
       margin-bottom: 50px;
-  }
+    }
 
-  .hidden {
+    .hidden {
       display: none;
-  }
+    }
 
-  .locationErrorMessage,
-  .descriptionErrorMessage,
-  .distanceErrorMessage {
+    .locationErrorMessage,
+    .descriptionErrorMessage,
+    .distanceErrorMessage {
       color: red;
       font-size: small;
-  }
+    }
 
-  h2{
+    h2 {
 
-    font-size: 35px;
+      font-size: 35px;
 
-  }
+    }
 
-  .ski {
+    .ski {
       margin-left: 45%;
       margin-top: 18%;
       background-color: white;
       padding: 10px;
-  }
+    }
 
-  .bg-white {
+    .bg-white {
       background-color: white;
       opacity: .85;
       min-height: 550px;
@@ -109,9 +113,9 @@
       margin-left: 28%;
       padding: 50px;
 
-  }
+    }
 
-  .bg-results {
+    .bg-results {
       background-color: lightgrey;
       opacity: .85;
       height: auto;
@@ -123,83 +127,86 @@
       display: flex;
       flex-direction: column;
 
-  }
-  .top {
+    }
+
+    .top {
       padding-top: 10vh;
-  }
-  .center {
+    }
+
+    .center {
       text-align: center;
-  }
-  .logo {
+    }
+
+    .logo {
       width: 50%;
       max-width: 300px;
       opacity: .85;
       border-radius: 20px;
-  }
+    }
 
-  .landd {
+    .landd {
       display: flex;
       flex-direction: row;
-  }
+    }
 
-  .distance {
+    .distance {
       margin-left: 10%;
       height: 100px;
-  }
+    }
 
-  .input {
+    .input {
       display: flex;
       flex-direction: column;
-  }
+    }
 
-  .box {
+    .box {
       padding-left: 20px;
       padding-bottom: 20px;
       border-radius: 20px;
 
-  }
+    }
 
-  .box1 {
+    .box1 {
       padding-left: 20px;
       padding-bottom: 20px;
       width: 200px;
       border-radius: 20px;
 
-  }
+    }
 
-  input[type=text] {
+    input[type=text] {
       width: 100%;
       padding: 12px 20px;
       margin: 8px 0;
       box-sizing: border-box;
-  }
+    }
 
-  .dis {
+    .dis {
       padding-top: 12px;
       opacity: .7;
 
-  }
+    }
 
-  #distance{
-    height: 3.25em;
-    width: 20em;
-  }
+    #distance {
+      height: 3.25em;
+      width: 20em;
+    }
 
-  label {
+    label {
       margin-left: 20px;
-  }
+    }
 
-  .ex {
+    .ex {
       font-style: italic;
       margin: 0;
       font-size: 10px;
-  }
+    }
 
-  .submit {
+    .submit {
       margin-left: 70%;
-  }
+    }
 
-  /* button {
+    /* button {
       text-align: right;
       margin-right: 38%;
       margin-top: 5px;
@@ -207,7 +214,7 @@
       font-family: "Source Sans Variable", sans-serif;
   } */
 
-  .button-default {
+    .button-default {
       height: 50px;
       background-color: #B70B21;
       width: 200px;
@@ -227,9 +234,9 @@
       border-radius: 25px;
       text-transform: uppercase;
       letter-spacing: 3px;
-  }
+    }
 
-  .button-small {
+    .button-small {
       height: 22px;
       background-color: #B70B21;
       width: 100px;
@@ -245,219 +252,233 @@
       font-family: 'Lato', sans-serif;
       border-radius: 11px;
       letter-spacing: 1px;
-  }
+    }
 
-  .button-default:hover {
+    .button-default:hover {
       background-color: black;
       transition: 0.25s linear;
       cursor: pointer;
-  }
+    }
 
-  .button-small:hover {
+    .button-small:hover {
       background-color: black;
       transition: 0.25s linear;
       cursor: pointer;
-  }
+    }
 
-  h6{
-    /* background-color: white; */
-    /* margin-bottom: 80%;
+    h6 {
+      /* background-color: white; */
+      /* margin-bottom: 80%;
     margin-left: 25%; */
-    /* padding: 2px;
+      /* padding: 2px;
     padding-right: 0px; */
-    opacity: .8;
+      opacity: .8;
 
-  }
+    }
 
-  .state {
-    text-transform: capitalize;
+    .state {
+      text-transform: capitalize;
       font-size: 14px;
       font-weight: normal;
-  }
+    }
 
-  .collapsible {
-    background-color: #eee;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-  }
+    .collapsible {
+      background-color: #eee;
+      color: #444;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+    }
 
-  .content {
-    padding: 0 18px;
-    display: none;
-    overflow: hidden;
-    background-color: #f1f1f1;
-  }
+    .content {
+      padding: 0 18px;
+      display: none;
+      overflow: hidden;
+      background-color: #f1f1f1;
+    }
 
-  .result {
+    .result {
       background-color: lightgrey;
       padding: 5px;
       border-radius: 18px;
       margin-top: 30px;
-  }
+    }
 
-  .result-row {
+    .result-row {
       display: flex;
       flex-direction: row;
       margin: 10px;
       height: 100%;
-  }
+    }
 
-  .title {
-    font-weight: bold;
-    text-align: center;
-  }
+    .title {
+      font-weight: bold;
+      text-align: center;
+    }
 
-  .resort-container {
+    .resort-container {
       flex-grow: 2;
-  }
-  .resort-name {
+    }
+
+    .resort-name {
       font-size: 20px;
       color: black;
       font-weight: bold;
       text-transform: capitalize;
-  }
-  .score-container {
+    }
+
+    .score-container {
       flex-grow: 1;
       text-align: right;
-  }
-  .bottom-container {
+    }
+
+    .bottom-container {
       width: 33%;
       text-align: center;
-  }
+    }
 
-  .detail-container {
+    .detail-container {
       height: 100%;
       background-color: white;
       padding: 10px;
       border-radius: 18px;
       width: 100%;
-  }
+    }
 
-  .number-container {
+    .number-container {
       background-color: darkgrey;
       padding: 10px;
       border-radius: 18px;
       margin: 5px;
-  }
-
-  .pandn {
-    max-height: 300px;
-    overflow-y: scroll;
-    background-color: white;
-    padding: 10px;
-    border-radius: 18px;
-    width: 82.5%;
-  }
-
-  h4 {
-      font-size: 20px;
-  }
-
-  .showButton {
-    background-color: lightgrey;
-    border: none;
-    border-radius: 8px;
-    color: black;
-    padding: 4px 6px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 4px 2px;
-    cursor: pointer;
-  }
-
-  span.stars, span.stars span {
-    display: block;
-    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/747/star-o-white.svg) 0 0 repeat-x;
-    width: 100px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.stars span {
-    background-position: 0 0;
-    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/747/star.svg);
-  }
-
-  span.scores, span.scores span {
-    display: block;
-    background: url(../static/circle_empty.svg) 0 0 repeat-x;
-    width: 200px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.scores span {
-    background-position: 0 0;
-    background-image: url(../static/circle.svg);
-  }
-
-  span.psentiment, span.psentiment span {
-    display: block;
-    background: url(../static/circle_empty.svg) 0 0 repeat-x;
-    width: 200px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.psentiment span {
-    background-position: 0 0;
-    background-image: url(../static/circlep.svg);
-  }
-
-  span.nsentiment, span.nsentiment span {
-    display: block;
-    background: url(../static/circle_empty.svg) 0 0 repeat-x;
-    width: 200px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.nsentiment span {
-    background-position: 0 0;
-    background-image: url(../static/circlen.svg);
-  }
-
-  .rating {
-    display: flex;
-    flex-direction: row;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    background-color: darkgrey;
-    border-radius: 18px;
-    border: none;
-    align-content: center;
-    width: 180px;
-    height: 80px;
-  }
-
-  .rate {
-    margin-top: 13.5%;
-  }
-
-  .sr {
-    margin-top: 15%;
-    margin-left: 3px;
-  }
-
-
-  @media (max-width: 400px) {
-
-    .container-fluid {
-      display: flex;
-      flex-direction: column;
-      align-content: center;
     }
 
-  }
+    .pandn {
+      max-height: 300px;
+      overflow-y: scroll;
+      background-color: white;
+      padding: 10px;
+      border-radius: 18px;
+      width: 82.5%;
+    }
 
+    h4 {
+      font-size: 20px;
+    }
+
+    .showButton {
+      background-color: lightgrey;
+      border: none;
+      border-radius: 8px;
+      color: black;
+      padding: 4px 6px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 14px;
+      margin: 4px 2px;
+      cursor: pointer;
+    }
+
+    span.stars,
+    span.stars span {
+      display: block;
+      background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/747/star-o-white.svg) 0 0 repeat-x;
+      width: 100px;
+      /* width of a star multiplied by 5 */
+      height: 20px;
+      /* the height of the star */
+      background-size: 20px 20px;
+    }
+
+    span.stars span {
+      background-position: 0 0;
+      background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/747/star.svg);
+    }
+
+    span.scores,
+    span.scores span {
+      display: block;
+      background: url(../static/circle_empty.svg) 0 0 repeat-x;
+      width: 200px;
+      /* width of a star multiplied by 5 */
+      height: 20px;
+      /* the height of the star */
+      background-size: 20px 20px;
+    }
+
+    span.scores span {
+      background-position: 0 0;
+      background-image: url(../static/circle.svg);
+    }
+
+    span.psentiment,
+    span.psentiment span {
+      display: block;
+      background: url(../static/circle_empty.svg) 0 0 repeat-x;
+      width: 200px;
+      /* width of a star multiplied by 5 */
+      height: 20px;
+      /* the height of the star */
+      background-size: 20px 20px;
+    }
+
+    span.psentiment span {
+      background-position: 0 0;
+      background-image: url(../static/circlep.svg);
+    }
+
+    span.nsentiment,
+    span.nsentiment span {
+      display: block;
+      background: url(../static/circle_empty.svg) 0 0 repeat-x;
+      width: 200px;
+      /* width of a star multiplied by 5 */
+      height: 20px;
+      /* the height of the star */
+      background-size: 20px 20px;
+    }
+
+    span.nsentiment span {
+      background-position: 0 0;
+      background-image: url(../static/circlen.svg);
+    }
+
+    .rating {
+      display: flex;
+      flex-direction: row;
+      padding-bottom: 10px;
+      padding-left: 10px;
+      background-color: darkgrey;
+      border-radius: 18px;
+      border: none;
+      align-content: center;
+      width: 180px;
+      height: 80px;
+    }
+
+    .rate {
+      margin-top: 13.5%;
+    }
+
+    .sr {
+      margin-top: 15%;
+      margin-left: 3px;
+    }
+
+
+    @media (max-width: 400px) {
+
+      .container-fluid {
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+      }
+
+    }
   </style>
   <script>
 
@@ -524,39 +545,39 @@
     // Set this to the width of one star.
     var starWidth = 20;
 
-    $.fn.stars = function() {
-      return $(this).each(function() {
+    $.fn.stars = function () {
+      return $(this).each(function () {
         $(this).html($('<span />').width(Math.max(0, (Math.min(5, parseFloat($(this).html())))) * starWidth));
       });
     }
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('span.stars').stars();
     });
 
     // Set this to the width of one circle.
     var scoresWidth = 20;
 
-    $.fn.scores = function() {
-      return $(this).each(function() {
+    $.fn.scores = function () {
+      return $(this).each(function () {
         $(this).html($('<span />').width(Math.max(0, (Math.min(10, parseFloat($(this).html())))) * scoresWidth));
       });
     }
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('span.scores').scores();
     });
 
     // Set this to the width of one star.
     var sentimentWidth = 20;
 
-    $.fn.sentiment = function() {
-      return $(this).each(function() {
+    $.fn.sentiment = function () {
+      return $(this).each(function () {
         $(this).html($('<span />').width(Math.max(0, (Math.min(10, parseFloat($(this).html())))) * sentimentWidth));
       });
     }
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('span.psentiment').sentiment();
     });
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('span.nsentiment').sentiment();
     });
 
@@ -579,17 +600,17 @@
         <h4 style="font-weight: bold;">Where You Should Spend Your Mountain Time:</h4>
 
         {% for d in data %}
-        {% if d['version'] == 2 %}
+        {% if d['version'] == 2 or d['version'] == 3 %}
 
         <div class="result">
 
           <div class="result-row">
             <div class="resort-container">
-              <div class="resort-name">{{d['area_name'].replace("-", " ")}}, <span class= 'state' >{{d['state']}}
-                ({{d['distance']}} miles away)</span></div>
+              <div class="resort-name">{{d['area_name'].replace("-", " ")}}, <span class='state'>{{d['state']}}
+                  ({{d['distance']}} miles away)</span></div>
             </div>
             <div class="resort-container rating">
-              <p class= "rate">Rating</p>
+              <p class="rate">Rating</p>
               <span class="stars sr">{{d['rating']}}</span>
             </div>
             <!-- <div class="resort-container">
@@ -602,16 +623,16 @@
           <div class="result-row">
             <div class="bottom-container number-container">
               {% if d['sentiment'] > 0 %}
-                <p class= 'title'>Average Sentiment</p>
-                <span class="psentiment">{{10*d['sentiment']}}</span>
+              <p class='title'>Average Sentiment</p>
+              <span class="psentiment">{{10*d['sentiment']}}</span>
               {% else %}
-                <p class= 'title'>Average Sentiment</p>
-                <span class="nsentiment">{{10*d['sentiment']}}</span>
+              <p class='title'>Average Sentiment</p>
+              <span class="nsentiment">{{10*d['sentiment']}}</span>
               {% endif %}
             </div>
             <div class="bottom-container number-container">
               <div class="similarity-score">
-                <p class= "title">Similarity Score</p>
+                <p class="title">Similarity Score</p>
                 <span class="scores">{{d['score']}}</span>
 
               </div>
@@ -622,44 +643,59 @@
           </div>
 
           <div class="result-row">
-            <p class= "title">Most Similar Review</p><br>
+            <p class="title">Most Similar Review</p><br>
             <div class="detail-container">
 
               <!-- <button onclick="showSimReviews(this)" class= 'showButton'>Show Similar Reviews</button>
               <div id= "sr" style= 'display: none;'> -->
-                {{ d["reviews"][0]['text'] }}
+              <!-- {{ d["reviews"][0]['text'] }} -->
+              <!-- {% set start=0 %} -->
+              {% set ns=namespace(start=0) %}
+              {% set processed = d['reviews'][0]['text'].split(' ') %}
+
+              {% for isImportant, upToIdx in d['important_words'] %}
+              {% set s = " ".join(processed[ns.start:upToIdx+1]) %}
+              {% if isImportant %}
+              <span style="color:red;">{{ s }}</span>
+              {% else %}
+              {{ s }}
+              {% endif %}
+              {% set ns.start=upToIdx+1 %}
+              {% endfor %}
               <!-- </div> -->
             </div>
           </div>
 
           <div class="result-row">
-            <p class= "title">Positive Reviews</p>
+            <p class="title">Positive Reviews</p>
             <div class="pandn">
               <!-- <button onclick="showPosReviews()" class= 'showButton'>Show Positive Reviews</button>
               <div id= "pr" style= 'display: none;'> -->
               {% for i in d["most_positive_reviews"] %}
-                <br><p>Review:</p> <br>
-                {{
-                i['review']['text']
-                }}
-                <br>
-                {% endfor %}
+              <br>
+              <p>Review:</p>{{i['sentiment_score']}}<br>
+              {{
+              i['review']['text']
+              }}
+              <br>
+              {% endfor %}
               <!-- </div> -->
             </div>
           </div>
 
           <div class="result-row">
-            <p class= "title">Negative Reviews</p>
+            <p class="title">Negative Reviews</p>
             <div class="pandn">
               <!-- <button onclick="showNegReviews()" class= 'showButton'>Show Negative Reviews</button>
               <div id= "nr" style= 'display: none;'> -->
-                {% for i in d["most_negative_reviews"] %}
-                <br><p>Review:</p> <br>
-                {{
-                i['review']['text']
-                }}
-                <br>
-                {% endfor %}
+              {% for i in d["most_negative_reviews"] %}
+              <br>
+              <p>Review:</p>{{i['sentiment_score']}}<br>
+              {{
+              i['review']['text']
+              }}
+              <br>
+              {% endfor %}
               <!-- </div> -->
             </div>
           </div>
@@ -741,8 +777,13 @@
               </div>
 
               <div>
-                <input type="radio" name="version" value="2" checked />
+                <input type="radio" name="version" value="2" />
                 <label for="v2">V2</label>
+              </div>
+
+              <div>
+                <input type="radio" name="version" value="3" checked />
+                <label for="v3">V3</label>
               </div>
             </div>
 

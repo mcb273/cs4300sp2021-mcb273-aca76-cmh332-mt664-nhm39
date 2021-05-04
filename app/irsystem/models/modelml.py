@@ -60,7 +60,9 @@ def vectorize_feats(processed_features):
     vectorizer = TfidfVectorizer(
         max_features=2000, min_df=2, max_df=0.8, stop_words=stopwords.words('english'))
     processed_features = vectorizer.fit_transform(processed_features).toarray()
-    return processed_features
+
+    feature_names_list = vectorizer.get_feature_names()
+    return processed_features, feature_names_list
 
 # Splits dataset into a training dataset and a testing dataset where the training set is 80% of the total dataset and testing 20%
 # Returns X_train, X_test, y_train, y_test where X_train and y_train are the features and labels for training respectively
@@ -103,7 +105,8 @@ def predict(text_classifier, X_test, y_test):
 def buildModel():
     dataframe = load_training_data()
     processed_features, labels = extract_training_data(dataframe)
-    tfidf_processed_features = vectorize_feats(processed_features)
+    tfidf_processed_features, feature_names_list = vectorize_feats(
+        processed_features)
     X_train, X_test, y_train, y_test = split(tfidf_processed_features, labels)
     classifier = train(X_train, y_train)
     save_model(classifier)
@@ -118,13 +121,46 @@ def testModel(classifier, X_test, y_test):
     print("Accuracy:\n", accuracy)
 
 
+def get_feature_names_list():
+    dataframe = load_training_data()
+    processed_features, labels = extract_training_data(dataframe)
+    tfidf_processed_features, feature_names_list = vectorize_feats(
+        processed_features)
+    with open("dataset/mldata/feature_names.csv", 'w') as myfile:
+        wr = csv.writer(myfile, delimiter=',', quoting=csv.QUOTE_MINIMAL)
+        for item in feature_names_list:
+            wr.writerow([item])
+    return feature_names_list
+
+
 def processReviews(reviews_path="dataset/skiing/reviews.json"):
     with open(reviews_path, "r") as f:
         reviews = json.load(f)
     data_flat = {"features": [review['text'] for _, review in reviews.items()]}
     df = pd.DataFrame.from_dict(data_flat)
     features, _ = extract_training_data(df, hasLabels=False)
-    return vectorize_feats(features), features
+    with open("dataset/mldata/feature_names.csv", newline='') as f:
+        reader = csv.reader(f)
+        feature_names_list = list(reader)
+    # print(feature_names_list[0])
+    flat_feature_names_list = [
+        item for sublist in feature_names_list for item in sublist]
+    # print(flat_feature_names_list[0])
+    num_feats = len(feature_names_list)
+    # print (num_feats)
+    num_revs = len(features)
+    vectorize = np.zeros((num_revs, num_feats))
+    for rev_num in (range(num_revs)):
+        processed_feat = features[rev_num]
+        # print (processed_feat)
+        tokens = processed_feat.split()
+        for tok in tokens:
+            if tok in flat_feature_names_list:
+                # print (tok)
+                index = flat_feature_names_list.index(tok)
+                vectorize[rev_num, index] += 1.0
+    # print (np.shape(vectorize))
+    return vectorize, features
 
 
 def loadModelAndRunOnReviews(model_path="dataset/mldata/pickle_model.pkl", reviews_path="dataset/skiing/reviews.json", save_path="dataset/mldata/review_to_emotion.json"):
@@ -139,6 +175,7 @@ def loadModelAndRunOnReviews(model_path="dataset/mldata/pickle_model.pkl", revie
             result[i] = {"emotion": predictions[i],
                          "text": reviews[str(i)]['text']}
         json.dump(result, f)
+
     # d = defaultdict(int)
     # count = 0
     # for i in range(len(predictions)):
@@ -154,4 +191,13 @@ def loadModelAndRunOnReviews(model_path="dataset/mldata/pickle_model.pkl", revie
     # print(d)
 
 
-model = loadModelAndRunOnReviews()
+##model = loadModelAndRunOnReviews()
+
+# feature_names_list = get_feature_names_list()
+# classifier, X_test, y_test= buildModel()
+# review_vect, features = processReviews()
+# loadModelAndRunOnReviews ()
+
+dataframe = load_training_data()
+processed_features, labels = extract_training_data(dataframe)
+print(set(labels))
