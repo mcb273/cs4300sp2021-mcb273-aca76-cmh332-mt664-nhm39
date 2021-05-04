@@ -311,6 +311,13 @@
   .title {
     font-weight: bold;
     text-align: center;
+    width: 100px;
+  }
+
+  .similartitle {
+    font-weight: bold;
+    text-align: center;
+    margin: 0;
   }
 
   .resort-container {
@@ -352,7 +359,7 @@
     background-color: white;
     padding: 10px;
     border-radius: 18px;
-    width: 82.5%;
+    width: 600px;
   }
 
   h4 {
@@ -447,6 +454,18 @@
     margin-left: 3px;
   }
 
+  .sim {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100px;
+  }
+
+  .score {
+    font-size: 11px;
+    text-align: center;
+  }
+
 
   @media (max-width: 400px) {
 
@@ -495,12 +514,30 @@
     });
 
     function showPosReviews() {
-      var x = document.getElementById("pr");
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
+      var x = document.querySelector(".pr");
+      // for (var i = 0; i < x.length; i++) {
+      //   x[i].id = 'pr-' + i;
+      // }
+      // console.log(x)
+      // var pcount = 0;
+      // x.forEach( d=> {
+      //   console.log(d)
+      //   if (d.id === "pr-" + pcount && d.style.display === "none") {
+      //     d.style.display = "block";
+      //
+      //   } else {
+      //     d.style.display = "none";
+      //   }
+      //   pcount += 1;
+      console.log(x.closest('div'))
+        // if (d.style.display === "none") {
+        //   d.style.display = "block";
+        // } else {
+        //   d.style.display = "none";
+        // }
+      // });
+
+
     }
 
     function showNegReviews() {
@@ -589,7 +626,7 @@
                 ({{d['distance']}} miles away)</span></div>
             </div>
             <div class="resort-container rating">
-              <p class= "rate">Rating</p>
+              <p class= "rate">Average User Rating</p>
               <span class="stars sr">{{d['rating']}}</span>
             </div>
             <!-- <div class="resort-container">
@@ -609,21 +646,24 @@
                 <span class="nsentiment">{{10*d['sentiment']}}</span>
               {% endif %}
             </div>
-            <div class="bottom-container number-container">
+            <!-- <div class="bottom-container number-container">
               <div class="similarity-score">
                 <p class= "title">Similarity Score</p>
                 <span class="scores">{{d['score']}}</span>
 
               </div>
-            </div>
+            </div> -->
             <!-- <div class="bottom-container">
               <div class="button-small">Details</div>
             </div> -->
           </div>
 
           <div class="result-row">
-            <p class= "title">Most Similar Review</p><br>
-            <div class="detail-container">
+            <div class= 'sim'>
+              <p class= "similartitle">Most Similar Review</p>
+              <p class= "score">Score: {{d['score']}}</p>
+          </div>
+            <div class="pandn">
 
               <!-- <button onclick="showSimReviews(this)" class= 'showButton'>Show Similar Reviews</button>
               <div id= "sr" style= 'display: none;'> -->
@@ -636,7 +676,7 @@
             <p class= "title">Positive Reviews</p>
             <div class="pandn">
               <!-- <button onclick="showPosReviews()" class= 'showButton'>Show Positive Reviews</button>
-              <div id= "pr" style= 'display: none;'> -->
+              <div class= "pr" style= 'display: none;'> -->
               {% for i in d["most_positive_reviews"] %}
                 <br><p>Review:</p> <br>
                 {{
