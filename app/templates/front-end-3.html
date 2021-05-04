@@ -14,7 +14,6 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
   <style>
@@ -341,7 +340,7 @@
   }
 
   .number-container {
-      background-color: white;
+      background-color: darkgrey;
       padding: 10px;
       border-radius: 18px;
       margin: 5px;
@@ -387,6 +386,45 @@
     background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/747/star.svg);
   }
 
+  span.scores, span.scores span {
+    display: block;
+    background: url(../static/circle_empty.svg) 0 0 repeat-x;
+    width: 200px; /* width of a star multiplied by 5 */
+    height: 20px; /* the height of the star */
+    background-size: 20px 20px;
+  }
+
+  span.scores span {
+    background-position: 0 0;
+    background-image: url(../static/circle.svg);
+  }
+
+  span.psentiment, span.psentiment span {
+    display: block;
+    background: url(../static/circle_empty.svg) 0 0 repeat-x;
+    width: 200px; /* width of a star multiplied by 5 */
+    height: 20px; /* the height of the star */
+    background-size: 20px 20px;
+  }
+
+  span.psentiment span {
+    background-position: 0 0;
+    background-image: url(../static/circlep.svg);
+  }
+
+  span.nsentiment, span.nsentiment span {
+    display: block;
+    background: url(../static/circle_empty.svg) 0 0 repeat-x;
+    width: 200px; /* width of a star multiplied by 5 */
+    height: 20px; /* the height of the star */
+    background-size: 20px 20px;
+  }
+
+  span.nsentiment span {
+    background-position: 0 0;
+    background-image: url(../static/circlen.svg);
+  }
+
   .rating {
     display: flex;
     flex-direction: row;
@@ -425,11 +463,11 @@
 
     $(document).ready(function () {
 
-      $("#resort-recommendations").on("submit", function (e) {
+      $("#resort-recommendations").on("submit", function () {
 
         var valid = true;
 
-        if ($("#location").prop("validity").valid) {
+        if ($("#location").prop("validity").valid && $.trim($("#location").val()).indexOf(",") != -1) {
           $("#locationError").addClass("hidden");
         } else {
           $("#locationError").removeClass("hidden");
@@ -495,6 +533,33 @@
       $('span.stars').stars();
     });
 
+    // Set this to the width of one circle.
+    var scoresWidth = 20;
+
+    $.fn.scores = function() {
+      return $(this).each(function() {
+        $(this).html($('<span />').width(Math.max(0, (Math.min(10, parseFloat($(this).html())))) * scoresWidth));
+      });
+    }
+    $(document).ready(function() {
+      $('span.scores').scores();
+    });
+
+    // Set this to the width of one star.
+    var sentimentWidth = 20;
+
+    $.fn.sentiment = function() {
+      return $(this).each(function() {
+        $(this).html($('<span />').width(Math.max(0, (Math.min(10, parseFloat($(this).html())))) * sentimentWidth));
+      });
+    }
+    $(document).ready(function() {
+      $('span.psentiment').sentiment();
+    });
+    $(document).ready(function() {
+      $('span.nsentiment').sentiment();
+    });
+
   </script>
 </head>
 
@@ -536,10 +601,20 @@
 
           <div class="result-row">
             <div class="bottom-container number-container">
-              <p class= 'title'>Average Sentiment</p> {{d['sentiment']}}
+              {% if d['sentiment'] > 0 %}
+                <p class= 'title'>Average Sentiment</p>
+                <span class="psentiment">{{10*d['sentiment']}}</span>
+              {% else %}
+                <p class= 'title'>Average Sentiment</p>
+                <span class="nsentiment">{{10*d['sentiment']}}</span>
+              {% endif %}
             </div>
             <div class="bottom-container number-container">
-              <div class="similarity-score"><p class= "title">Score</p> {{d['score']}}</div>
+              <div class="similarity-score">
+                <p class= "title">Similarity Score</p>
+                <span class="scores">{{d['score']}}</span>
+
+              </div>
             </div>
             <!-- <div class="bottom-container">
               <div class="button-small">Details</div>
@@ -612,7 +687,7 @@
                   <label for="location">*Location:</label>
                   <div class="locationErrorMessage">
                     <span class="errorContainer hidden" id="locationError">
-                      Please enter a location.
+                      Please enter a location in the form City, State.
                     </span>
                   </div>
                   <div class="box1">
