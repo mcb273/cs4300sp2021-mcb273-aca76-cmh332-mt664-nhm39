@@ -17,13 +17,16 @@ with open("dataset/mldata/review_to_emotion.json") as f:
     review_to_emotion = json.load(f)
 
 area_to_emotion_count = defaultdict(dict)
-
+area_to_review_count = defaultdict(int)
 for i in range(len(dataset)):
     str_i = str(i)
+    if str_i not in dataset:
+        continue
     emotion = review_to_emotion[str_i]['emotion']
     text = review_to_emotion[str_i]['text']
     word_count = len(text.split())
     area_name = dataset[str_i]['area_name']
+    area_to_review_count[area_name] += 1
 
     if emotion != 'fear' and word_count > 100:
         if area_name in area_to_emotion_count:
@@ -52,4 +55,5 @@ with open("dataset/skiing/area_name_data.json", "w") as f:
                                                  'review':dataset[d['row_number']]}
                                                 for d in area_name_to_top_sentiment[area_name]['top_10_negative']]
         result[area_name]['emotions'] = area_to_emotion_count[area_name]
+        result[area_name]['number_of_reviews'] = area_to_review_count[area_name]
     json.dump(result, f)
