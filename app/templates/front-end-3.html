@@ -14,6 +14,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+
 
 
   <style>
@@ -334,7 +336,7 @@
       text-align: right;
   }
   .bottom-container {
-      width: 33%;
+      width: 50%;
       text-align: center;
   }
 
@@ -433,25 +435,23 @@
   }
 
   .rating {
-    display: flex;
-    flex-direction: row;
-    padding-bottom: 10px;
-    padding-left: 10px;
     background-color: darkgrey;
     border-radius: 18px;
     border: none;
     align-content: center;
-    width: 180px;
-    height: 80px;
+    width: 50%;
   }
 
-  .rate {
-    margin-top: 13.5%;
+  .rate, .sentTitle {
+    font-weight: bold;
+    text-align: center;
   }
 
-  .sr {
-    margin-top: 15%;
-    margin-left: 3px;
+  .s {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
   }
 
   .sim {
@@ -464,6 +464,77 @@
   .score {
     font-size: 11px;
     text-align: center;
+  }
+
+  .e_vals {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .e_container {
+    width: 100%;
+  }
+
+  .emot {
+    margin: 10px;
+  }
+
+  .tocenter {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 83%;
+  }
+
+  .horiz {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #love {
+    background-color: pink;
+    opacity: .8;
+    padding: 3px;
+    margin: 3px;
+    border-radius: 18px;
+  }
+
+  #surprise {
+    background-color: purple;
+    opacity: .8;
+    padding: 3px;
+    margin: 3px;
+    border-radius: 18px;
+  }
+
+  #sadness {
+    background-color: blue;
+    opacity: .4;
+    padding: 3px;
+    margin: 3px;
+    border-radius: 18px;
+  }
+
+  #anger {
+    background-color: red;
+    opacity: .8;
+    padding: 3px;
+    margin: 3px;
+    border-radius: 18px;
+  }
+
+  #joy {
+    background-color: yellow;
+    opacity: .8;
+    padding: 3px;
+    margin: 3px;
+    border-radius: 18px;
+  }
+
+  #color {
+    color: black;
+    font-weight: 900;
+
   }
 
 
@@ -597,6 +668,13 @@
       $('span.nsentiment').sentiment();
     });
 
+    $('.value').each(function() {
+    	var text = $(this).text();
+    	$(this).parent().css('width', text);
+    });
+
+    $('.block').tooltip();
+
   </script>
 </head>
 
@@ -625,10 +703,7 @@
               <div class="resort-name">{{d['area_name'].replace("-", " ")}}, <span class= 'state' >{{d['state']}}
                 ({{d['distance']}} miles away)</span></div>
             </div>
-            <div class="resort-container rating">
-              <p class= "rate">Average User Rating</p>
-              <span class="stars sr">{{d['rating']}}</span>
-            </div>
+
             <!-- <div class="resort-container">
               <div class="state-name"><span style="text-transform: capitalize;">{{d['state']}}</span>
                 ({{d['distance']}} miles away)</div>
@@ -636,15 +711,19 @@
 
           </div>
 
-          <div class="result-row">
+          <div class="result-row horiz">
             <div class="bottom-container number-container">
               {% if d['sentiment'] > 0 %}
-                <p class= 'title'>Average Sentiment</p>
-                <span class="psentiment">{{10*d['sentiment']}}</span>
+                <p class= 'sentTitle'>Average Sentiment</p>
+                <span class="psentiment s">{{10*d['sentiment']}}</span>
               {% else %}
-                <p class= 'title'>Average Sentiment</p>
-                <span class="nsentiment">{{10*d['sentiment']}}</span>
+                <p class= 'sentTitle'>Average Sentiment</p>
+                <span class="nsentiment s">{{10*d['sentiment']}}</span>
               {% endif %}
+            </div>
+            <div class="resort-container rating number-container">
+              <p class= "rate">Average User Rating</p>
+              <span class="stars s">{{d['rating']}}</span>
             </div>
             <!-- <div class="bottom-container number-container">
               <div class="similarity-score">
@@ -656,12 +735,56 @@
             <!-- <div class="bottom-container">
               <div class="button-small">Details</div>
             </div> -->
-          </div>
+          <!-- </div> -->
+        </div>
 
           <div class= "result-row">
-            <div class= "emotion">
-              {% for e in d['emotion'] %}
+            <div class= "emotion e_container number-container">
+              {% set total=namespace(start=0) %}
+              {% for key, value in d['emotion_numbers'].items() %}
+                {% set total.start=total.start+value %}
               {% endfor %}
+
+              {% if total.start > 0 %}
+                {% set love=namespace(start=0) %}
+                {% set surprise=namespace(start=0) %}
+                {% set sadness=namespace(start=0) %}
+                {% set anger=namespace(start=0) %}
+                {% set joy=namespace(start=0) %}
+                {% for key, value in d['emotion_numbers'].items() %}
+                  {% if key == 'love' %}
+                    {% set love.start=love.start+(100*(value / total.start)|round(2)) %}
+                  {% endif %}
+                  {% if key == 'surprise' %}
+                    {% set surprise.start=surprise.start+(100*(value / total.start)|round(2)) %}
+                  {% endif %}
+                  {% if key == 'sadness' %}
+                    {% set sadness.start=sadness.start+(100*(value / total.start)|round(2)) %}
+                  {% endif %}
+                  {% if key == 'anger' %}
+                    {% set anger.start=anger.start+(100*(value / total.start)|round(2)) %}
+                  {% endif %}
+                  {% if key == 'joy' %}
+                    {% set joy.start=joy.start+(100*(value / total.start)|round(2)) %}
+                  {% endif %}
+                {% endfor %}
+              {% endif %}
+
+              <div class= 'tocenter'>
+                <div class = "e_vals">
+                {% for key, value in d['emotion_numbers'].items() %}
+                  <div id= '{{key}}'><p class= 'emot' id='color'>{{key}}: {{(100*(value / total.start)|round(2))}}</p></div>
+                {% endfor %}
+                </div>
+              </div>
+
+              <!-- <div class="chart">
+                <div class="bar-container">
+                    <div class="bar windows" style="width: {{joy.start}}"></div>
+                    <div class="bar linux" style="width: 40%"></div>
+                    <div class="bar macos" style="width: 30%"></div>
+                </div>
+              </div> -->
             </div>
           </div>
 
@@ -686,7 +809,7 @@
                {% for isImportant, upToIdx in d['important_words'] %}
                {% set s = " ".join(processed[ns.start:upToIdx+1]) %}
                {% if isImportant %}
-               <span style="color:red;">{{ s }}</span>
+               <span style="font-weight:bold; color: blue;">{{ s }}</span>
                {% else %}
                {{ s }}
                {% endif %}
@@ -701,11 +824,10 @@
               <!-- <button onclick="showPosReviews()" class= 'showButton'>Show Positive Reviews</button>
               <div class= "pr" style= 'display: none;'> -->
               {% for i in d["most_positive_reviews"] %}
-                <br><p>Review:</p> <br>
+                <p style= "font-weight: bold; text-decoration: underline; font-style: italic; margin-top: 10px; margin-bottom: 20px;">Review:</p>
                 {{
                 i['review']['text']
                 }}
-                <br>
                 {% endfor %}
               <!-- </div> -->
             </div>
@@ -714,14 +836,13 @@
           <div class="result-row">
             <p class= "title">Negative Reviews</p>
             <div class="pandn">
-              <!-- <button onclick="showNegReviews()" class= 'showButton'>Show Negative Reviews</button>
-              <div id= "nr" style= 'display: none;'> -->
+              <!-- <button onclick="showNegReviews()" class= 'showButton' id= "{{d['row_number']}}">Show Negative Reviews</button>
+              <div id= "{{d['most_negative_reviews']}}" style= 'display: none;'> -->
                 {% for i in d["most_negative_reviews"] %}
-                <br><p>Review:</p> <br>
+                <p style= "font-weight: bold; text-decoration: underline; font-style: italic; margin-top: 10px; margin-bottom: 20px;">Review:</p>
                 {{
                 i['review']['text']
                 }}
-                <br>
                 {% endfor %}
               <!-- </div> -->
             </div>

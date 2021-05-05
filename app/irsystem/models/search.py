@@ -370,7 +370,7 @@ def search_q(query, version, location=None, distance=None):
         "rating": round(float(area_name_data[area_name]['average_rating']), 2),
         "most_positive_reviews": area_name_data[area_name]['top_10_positive'],
         "most_negative_reviews": area_name_data[area_name]['top_10_negative'],
-        "emotion_numbers": area_name_data[area_name]['emotion'],
+        "emotion_numbers": area_name_data[area_name]['emotions'],
         "important_words": [],
         "query": query
     } for area_name, score in scores if area_to_distance[area_name] <= distance]
