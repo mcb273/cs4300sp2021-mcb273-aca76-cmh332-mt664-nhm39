@@ -11,3 +11,4 @@ dataset/.DS_Store
 cs4300-env
 .DS_Store
 dataset/mldata/pickle_model.pkl
+app/irsystem/.DS_Store
