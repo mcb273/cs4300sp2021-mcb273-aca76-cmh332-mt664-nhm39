@@ -60,6 +60,10 @@ def build_vectorizer(max_n_terms=5000, max_prop_docs=0.8, min_n_docs=10):
     return vectorizer
 
 
+with open('dataset/skiing/area_name_data.json', 'r') as f:
+    area_name_data = json.load(f)
+
+
 class Model1:
     def __init__(self):
         self.ski_dict = {}
@@ -255,6 +259,7 @@ class Model2:
             area_name: [add_row_num_back(
                 tup[0], self.data[str(tup[0])]) for tup in tup_lst]
             for area_name, tup_lst in area_name_to_score_tup_lst.items()}
+        # print(area_name_to_reviews)
         return sorted(unsorted, key=lambda x: x[1], reverse=True), area_name_to_reviews
 
     def search(self, query, location, distance):
@@ -268,6 +273,24 @@ class Model3(Model2):
     def __init__(self):
         super().__init__()
 
+    def rank_weighted(self, lst, alpha=0.85, beta=0.1, gamma=0.05):
+        # takes in a list of tuples (area_name, avg sim score)
+        # returns a list of tuples (area_name, weighted score)
+        # cosine similarity is [0,1], sentiment is [-1,1]
+        # but rating is [0,5] so have to normalize it
+        x = [(sim*100, (area_name_data[area_name]['average_rating']/5),
+              area_name_data[area_name]['average_sentiment']) for area_name, sim in lst]
+        y = [(alpha*sim, beta*(area_name_data[area_name]['average_rating']/5),
+              gamma*area_name_data[area_name]['average_sentiment']) for area_name, sim in lst]
+        result = [(area_name, alpha*sim + beta*(area_name_data[area_name]['average_rating']/5) +
+                   gamma*area_name_data[area_name]['average_sentiment']) for area_name, sim in lst]
+        for i in range(5):
+            print(lst[i][0])
+            print(lst[i][1], "-->", result[i][1])
+            print("normalized:", x[i])
+            print("weighted:", y[i], "\n\n")
+        return lst
+
     def average_sim_vect_by_area(self, sim_vect, index_to_area_name):
         # returns a sorted list of tuples (area_name, avg score)
         # this model only counts reviews with nonzero similarity score, unlike model 2
@@ -275,11 +298,11 @@ class Model3(Model2):
                   for i, sim in enumerate(sim_vect)]
         area_to_total, area_to_count = defaultdict(float), defaultdict(int)
         for score, area in tuples:
-            if score > 0:
-                area_to_total[area] += score
-                area_to_count[area] += 1
+            area_to_total[area] += score
+            area_to_count[area] += 1
         unsorted = [(area, area_to_total[area]/area_to_count[area])
                     for area in area_to_total]
+        # unsorted = self.rank_weighted(unsorted)
         area_name_to_score_tup_lst = self.intermediate(tuples)
 
         def add_row_num_back(row_num, review):
@@ -337,10 +360,6 @@ class Model3(Model2):
         return
 
 
-with open('dataset/skiing/area_name_data.json', 'r') as f:
-    area_name_data = json.load(f)
-
-
 def search_q(query, version, location=None, distance=None):
     if version == 1:
         model = Model1()
@@ -356,8 +375,8 @@ def search_q(query, version, location=None, distance=None):
     scores, area_name_to_sorted_reviews = model.search(
         query, location, distance)
     area_to_distance = dist.getDistanceForAreas(location)
-    if area_to_distance is None:
-        return [{"error": True}]
+    if "error" in area_to_distance.keys():
+        return area_to_distance
     results = [{
         "version": version,
         "area_name": area_name,
@@ -374,8 +393,11 @@ def search_q(query, version, location=None, distance=None):
         "query": query
     } for area_name, score in scores if area_to_distance[area_name] <= distance]
     results = results[:min(5, len(results))]
+    # print(results[0]['reviews'][0])
     if version == 3:
         model.add_important_similarity_words(results, query)
+    for i in range(5):
+        print(results[i]['area_name'], results[i]['score'])
     return results
 
 
