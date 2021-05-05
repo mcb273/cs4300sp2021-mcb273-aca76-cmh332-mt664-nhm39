@@ -357,8 +357,8 @@ def search_q(query, version, location=None, distance=None):
     scores, area_name_to_sorted_reviews = model.search(
         query, location, distance)
     area_to_distance = dist.getDistanceForAreas(location)
-    if area_to_distance is None:
-        return [{"error": True}]
+    if "error" in area_to_distance.keys():
+        return area_to_distance
     results = [{
         "version": version,
         "area_name": area_name,
