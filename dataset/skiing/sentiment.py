@@ -11,10 +11,11 @@ def calculateSentimentForReviews():
         with open("dataset/skiing/reviews.json", "r") as f2:
             dataset = json.load(f2)
             data = {}
-            for review in dataset['reviews']:
+            # for review in dataset['reviews']:
+            for row_num, review in dataset.items():
                 text = review['text']
                 scores = sia.polarity_scores(text)
-                data[review['row_number']] = scores
+                data[row_num] = scores
             json.dump(data, f)
 
 
@@ -62,6 +63,7 @@ def getSentimentForReviewsByAreaName():
 
 
 # print(sia.polarity_scores("some really awesome skiing here, loved it"))
+calculateSentimentForReviews()
 getSentimentForReviewsByAreaName()
 # with open("dataset/skiing/area_name_to_top_sentiment.json", "r") as f:
 #     x = json.load(f)

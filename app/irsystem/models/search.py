@@ -257,7 +257,7 @@ class Model2:
             return review
         area_name_to_reviews = {
             area_name: [add_row_num_back(
-                tup[0], self.data[str(tup[0])]) for tup in tup_lst]
+                tup[0], self.data[str(tup[0])]) for tup in tup_lst if str(tup[0]) in self.data]  # TODO figure out what to do with reviews that no longer exist
             for area_name, tup_lst in area_name_to_score_tup_lst.items()}
         # print(area_name_to_reviews)
         return sorted(unsorted, key=lambda x: x[1], reverse=True), area_name_to_reviews
@@ -310,7 +310,7 @@ class Model3(Model2):
             return review
         area_name_to_reviews = {
             area_name: [add_row_num_back(
-                tup[0], self.data[str(tup[0])]) for tup in tup_lst]
+                tup[0], self.data[str(tup[0])]) for tup in tup_lst if str(tup[0]) in self.data]
             for area_name, tup_lst in area_name_to_score_tup_lst.items()}
         return sorted(unsorted, key=lambda x: x[1], reverse=True), area_name_to_reviews
 
@@ -390,14 +390,15 @@ def search_q(query, version, location=None, distance=None):
         "most_negative_reviews": area_name_data[area_name]['top_10_negative'],
         "emotion_numbers": area_name_data[area_name]['emotions'],
         "important_words": [],
+        "number_of_reviews": area_name_data[area_name]['number_of_reviews'],
         "query": query
     } for area_name, score in scores if area_to_distance[area_name] <= distance]
     results = results[:min(5, len(results))]
     # print(results[0]['reviews'][0])
     if version == 3:
         model.add_important_similarity_words(results, query)
-    for i in range(5):
-        print(results[i]['area_name'], results[i]['score'])
+    # for i in range(5):
+    print(results[0]['most_negative_reviews'])
     return results
 
 
