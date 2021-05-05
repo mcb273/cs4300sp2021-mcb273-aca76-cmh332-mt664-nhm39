@@ -419,6 +419,7 @@
 
   span.psentiment span {
     background-position: 0 0;
+    max-width: 50%;
     background-image: url(../static/circlep.svg);
   }
 
@@ -476,6 +477,7 @@
   .e_vals {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .e_container {
@@ -483,7 +485,7 @@
   }
 
   .emot {
-    margin: 10px;
+    margin: 5px;
   }
 
   .tocenter {
@@ -496,6 +498,10 @@
   .horiz {
     display: flex;
     flex-direction: row;
+  }
+
+  .sentimentWidth {
+    min-width: 220px;
   }
 
   #love {
@@ -542,7 +548,7 @@
     color: black;
     font-weight: 900;
     border-radius: 9px;
-    padding: 10px;
+    padding: 7px;
   }
 
   .exp {
@@ -715,7 +721,7 @@
 
         {% for d in data %}
         {% if d['version'] == 2 or d['version'] == 3 %}
-
+        {{d['all-reviews']}}
         <div class="result">
 
           <div class="result-row">
@@ -732,7 +738,7 @@
           </div>
 
           <div class="result-row horiz">
-            <div class="bottom-container number-container">
+            <div class="bottom-container number-container sentimentWidth">
               {% if d['sentiment'] > 0 %}
                 <div class= 'sentDiv'>
                   <p class= 'sentTitle'>Average Sentiment</p>
@@ -800,7 +806,9 @@
                 <div class = "e_vals">
                 {% for key, value in d['emotion_numbers'].items() %}
                   {% if value > 0 %}
-                  <div id= '{{key}}'><p class= 'emot' id='color'>{{key}}: {{(100*(value / total.start)|round(2))}}%</p></div>
+                  {% with frac = (100*(value / total.start))|round(2, 'floor') %}
+                  <div id= '{{key}}'><p class= 'emot' id='color'>{{key}}: {{frac}}%</p></div>
+                  {% endwith %}
                   {% endif %}
                 {% endfor %}
                 </div>

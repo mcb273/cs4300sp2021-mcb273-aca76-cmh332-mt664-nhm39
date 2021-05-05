@@ -366,6 +366,7 @@ def search_q(query, version, location=None, distance=None):
         "distance":round(area_to_distance[area_name]),
         "score": round(score*100, 2),
         "reviews": area_name_to_sorted_reviews[area_name][:3],
+        "all-reviews": Counter(area_name_to_sorted_reviews[area_name]),
         "sentiment": round(float(area_name_data[area_name]['average_sentiment']), 2),
         "rating": round(float(area_name_data[area_name]['average_rating']), 2),
         "most_positive_reviews": area_name_data[area_name]['top_10_positive'],
