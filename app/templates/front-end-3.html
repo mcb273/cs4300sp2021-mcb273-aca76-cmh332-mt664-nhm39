@@ -133,9 +133,10 @@
       text-align: center;
   }
   .logo {
-      width: 50%;
-      max-width: 300px;
+      width: 60%;
+      max-width: 600px;
       opacity: .85;
+      margin-top: 2%;
       border-radius: 20px;
   }
 
@@ -442,7 +443,13 @@
     width: 50%;
   }
 
-  .rate, .sentTitle {
+  .sentTitle {
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .rate {
     font-weight: bold;
     text-align: center;
   }
@@ -540,6 +547,17 @@
     opacity: .8;
   }
 
+  .exp {
+    margin-bottom: 2px;;
+    padding: 0;
+    font-size: 10px;
+  }
+
+  .sentDiv {
+    display: flex;
+    flex-direction: column;
+  }
+
 
   @media (max-width: 400px) {
 
@@ -552,6 +570,7 @@
   }
 
   </style>
+
   <script>
 
     $(document).ready(function () {
@@ -717,10 +736,16 @@
           <div class="result-row horiz">
             <div class="bottom-container number-container">
               {% if d['sentiment'] > 0 %}
-                <p class= 'sentTitle'>Average Sentiment</p>
+                <div class= 'sentDiv'>
+                  <p class= 'sentTitle'>Average Sentiment</p>
+                  <p class= 'exp'>Green=Positive, Red=Negative</p>
+                </div>
                 <span class="psentiment s">{{10*d['sentiment']}}</span>
               {% else %}
+              <div class= 'sentDiv'>
                 <p class= 'sentTitle'>Average Sentiment</p>
+                <p class= 'exp'>Green=Positive, Red=Negative</p>
+              </div>
                 <span class="nsentiment s">{{10*d['sentiment']}}</span>
               {% endif %}
             </div>
@@ -839,17 +864,18 @@
           <div class="result-row">
             <p class= "title">Negative Reviews</p>
             <div class="pandn">
-              <!-- <button onclick="showNegReviews()" class= 'showButton' id= "{{d['row_number']}}">Show Negative Reviews</button>
-              <div id= "{{d['most_negative_reviews']}}" style= 'display: none;'> -->
-                {% for i in d["most_negative_reviews"] %}
+              <!-- <button onclick="showNegReviews()" class= 'showButton' id= "{{d['most_negative_reviews']['row_number']}}">Show Negative Reviews</button>
+              <div id= "{{d}}" style= 'display: none;'> -->
+              {% for i in d["most_negative_reviews"] %}
                 <p style= "font-weight: bold; text-decoration: underline; font-style: italic; margin-top: 10px; margin-bottom: 20px;">Review:</p>
                 {{
                 i['review']['text']
                 }}
-                {% endfor %}
+              {% endfor %}
               <!-- </div> -->
             </div>
           </div>
+
 
         </div>
         {% else %}
