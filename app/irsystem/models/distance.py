@@ -43,7 +43,10 @@ def getDistanceForAreas(query):
         return {"error": "The Geopy API is currently unavailable. Please try again."}
     if loc is not None:
         source = (loc.latitude, loc.longitude)
-        dists = getDistance(source, locations)
+        try:
+            dists = getDistance(source, locations)
+        except json.JSONDecodeError:
+            return {'error': "External API error while calculating distance. Please try again."}
         return {area_name: distance for distance, area_name in dists}
     else:
         return {"error": "Location could not be determined."}
@@ -57,4 +60,4 @@ def sortAreasByDistance(area_to_distance):
     return sorted(result, key=lambda x: x[1])
 
 
-print(getDistanceForAreas("neasdfasdf"))
+# print(getDistanceForAreas("neasdfasdf"))

@@ -399,7 +399,9 @@ def search_q(query, version, location=None, distance=None):
     if version == 3:
         model.add_important_similarity_words(results, query)
     # for i in range(5):
-    print(results[0]['most_negative_reviews'])
+    # print(results[0]['most_negative_reviews'])
+    if results == []:
+        return {"error": "Your search did not return any results. Try expanding your location range or changing your query."}
     return results
 
 
