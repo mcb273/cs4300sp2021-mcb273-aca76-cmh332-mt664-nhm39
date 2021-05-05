@@ -339,6 +339,7 @@ class Model3(Model2):
 
 with open('dataset/skiing/area_name_data.json', 'r') as f:
     area_name_data = json.load(f)
+    # print(area_name_data['squaw-valley-usa']['emotions'])
 
 
 def search_q(query, version, location=None, distance=None):
