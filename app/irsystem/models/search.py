@@ -202,6 +202,7 @@ class Model1:
 class Model2:
     def __init__(self):
         self.data = {}
+        self.review_num_to_idx = {}
         return
 
     def load_data_from_json(self, file="dataset/skiing/reviews.json"):
@@ -211,6 +212,9 @@ class Model2:
         reviews = [review['text'] for row_num, review in self.data.items()]
         index_to_area_name = {i: self.data[key]["area_name"]
                               for i, key in enumerate(self.data)}
+        self.review_num_to_idx = {row_num: i for i,
+                                  row_num in enumerate(self.data)}
+        # index_to_area_name = { for row_num, _ in self.data}
         corpus = [query] + reviews
         mat = vectorizer.fit_transform(corpus).toarray()
         self.index_to_vocab = {i: v for i, v in enumerate(
@@ -232,10 +236,9 @@ class Model2:
         # list of pairs (score, area_name)
         # returns { area_name: sorted list of pairs (review_id, score) }
         result = defaultdict(list)
-        i = 0
-        for score, area_name in tuples:
-            result[area_name].append((i, score))
-            i += 1
+        for score, area_name, idx in tuples:
+            result[area_name].append((list(self.data.keys())[idx], score))
+            # i += 1
         for area_name in result:
             result[area_name].sort(key=lambda x: x[1], reverse=True)
         return result
@@ -293,11 +296,10 @@ class Model3(Model2):
 
     def average_sim_vect_by_area(self, sim_vect, index_to_area_name):
         # returns a sorted list of tuples (area_name, avg score)
-        # this model only counts reviews with nonzero similarity score, unlike model 2
-        tuples = [(sim, index_to_area_name[i])
+        tuples = [(sim, index_to_area_name[i], i)
                   for i, sim in enumerate(sim_vect)]
         area_to_total, area_to_count = defaultdict(float), defaultdict(int)
-        for score, area in tuples:
+        for score, area, idx in tuples:
             area_to_total[area] += score
             area_to_count[area] += 1
         unsorted = [(area, area_to_total[area]/area_to_count[area])
@@ -326,13 +328,17 @@ class Model3(Model2):
         for result in results:
             review = result['reviews'][0]
             # we have to add one because the query is now index zero
-            idx = review['row_number'] + 1
+            # idx = int(review['row_number']) + 1
+            # TODO: this is not the idx anymore
+
+            idx = self.review_num_to_idx[review["row_number"]] + 1
             row = self.tfidf[idx]
             elem_wise_prod = np.multiply(row, self.tfidf[0])
             words = [(elem_wise_prod[i], self.index_to_vocab[i])
                      for i in range(len(elem_wise_prod)) if elem_wise_prod[i] > 0]
             words = sorted(words, key=lambda x: x[0], reverse=True)[:k]
             important_word_set = set([word for _, word in words])
+            print(important_word_set)
             out, i = [], 0
 
             def tokenize_word(s):
@@ -399,7 +405,7 @@ def search_q(query, version, location=None, distance=None):
     if version == 3:
         model.add_important_similarity_words(results, query)
     # for i in range(5):
-    # print(results[0]['most_negative_reviews'])
+    print(results[0]['important_words'])
     if results == []:
         x = {"error": "Your search did not return any results. Try expanding your location range or changing your query."}
         print(x)
