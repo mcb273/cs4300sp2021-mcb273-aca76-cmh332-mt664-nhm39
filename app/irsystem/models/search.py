@@ -367,7 +367,7 @@ def search_q(query, version, location=None, distance=None):
         data = [tup[1] for tup in data]
         return data[:3]
     elif version == 2:
-        assert (location is not None and distance is not None)
+        # assert (location is not None and distance is not None)
         model = Model2()
     else:
         model = Model3()
@@ -376,6 +376,7 @@ def search_q(query, version, location=None, distance=None):
         query, location, distance)
     area_to_distance = dist.getDistanceForAreas(location)
     if "error" in area_to_distance.keys():
+        print(area_to_distance)
         return area_to_distance
     results = [{
         "version": version,
@@ -384,7 +385,6 @@ def search_q(query, version, location=None, distance=None):
         "distance":round(area_to_distance[area_name]),
         "score": round(score*100, 2),
         "reviews": area_name_to_sorted_reviews[area_name][:3],
-        "all-reviews": Counter(area_name_to_sorted_reviews[area_name]),
         "sentiment": round(float(area_name_data[area_name]['average_sentiment']), 2),
         "rating": round(float(area_name_data[area_name]['average_rating']), 2),
         "most_positive_reviews": area_name_data[area_name]['top_10_positive'],
@@ -393,7 +393,7 @@ def search_q(query, version, location=None, distance=None):
         "important_words": [],
         "number_of_reviews": area_name_data[area_name]['number_of_reviews'],
         "query": query
-    } for area_name, score in scores if area_to_distance[area_name] <= distance]
+    } for area_name, score in scores if area_to_distance[area_name] <= distance or distance == 1000]
     results = results[:min(5, len(results))]
     # print(results[0]['reviews'][0])
     if version == 3:
@@ -401,7 +401,9 @@ def search_q(query, version, location=None, distance=None):
     # for i in range(5):
     # print(results[0]['most_negative_reviews'])
     if results == []:
-        return {"error": "Your search did not return any results. Try expanding your location range or changing your query."}
+        x = {"error": "Your search did not return any results. Try expanding your location range or changing your query."}
+        print(x)
+        return x
     return results
 
 
