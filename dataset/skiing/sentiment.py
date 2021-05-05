@@ -40,6 +40,10 @@ def get_top_10_for_area(sentiments, isPositive):
     # so reverse = isPositive
     top = sorted(
         sentiments, key=lambda x: x['sentiment']['compound'], reverse=isPositive)
+    if isPositive:
+        top = [x for x in top if x['sentiment']['compound'] > 0]
+    else:
+        top = [x for x in top if x['sentiment']['compound'] < 0]
     return top[:min(10, len(top))]
 
 
@@ -58,7 +62,7 @@ def getSentimentForReviewsByAreaName():
 
 
 # print(sia.polarity_scores("some really awesome skiing here, loved it"))
-# getSentimentForReviewsByAreaName()
+getSentimentForReviewsByAreaName()
 # with open("dataset/skiing/area_name_to_top_sentiment.json", "r") as f:
 #     x = json.load(f)
 #     print(x['killington-resort'])

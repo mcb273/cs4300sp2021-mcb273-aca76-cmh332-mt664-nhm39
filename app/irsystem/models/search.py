@@ -209,6 +209,9 @@ class Model2:
                               for i, key in enumerate(self.data)}
         corpus = [query] + reviews
         mat = vectorizer.fit_transform(corpus).toarray()
+        self.index_to_vocab = {i: v for i, v in enumerate(
+            vectorizer.get_feature_names())}
+        self.tfidf = mat
         return mat, index_to_area_name
 
     def build_cos_sim_vect(self, tfidf):
@@ -244,8 +247,13 @@ class Model2:
         unsorted = [(area, area_to_total[area]/area_to_count[area])
                     for area in area_to_total]
         area_name_to_score_tup_lst = self.intermediate(tuples)
+
+        def add_row_num_back(row_num, review):
+            review["row_number"] = row_num
+            return review
         area_name_to_reviews = {
-            area_name: [self.data[str(tup[0])] for tup in tup_lst]
+            area_name: [add_row_num_back(
+                tup[0], self.data[str(tup[0])]) for tup in tup_lst]
             for area_name, tup_lst in area_name_to_score_tup_lst.items()}
         return sorted(unsorted, key=lambda x: x[1], reverse=True), area_name_to_reviews
 
@@ -256,24 +264,81 @@ class Model2:
         return self.average_sim_vect_by_area(self.cos_sim_vect, self.index_to_area_name)
 
 
-# with open("dataset/skiing/area_name_to_state.json", "r") as f:
-#     area_name_to_state = json.load(f)
-# with open("dataset/skiing/area_name_to_top_sentiment.json", "r") as f:
-#     area_name_to_top_sentiment = json.load(f)
-# with open("dataset/skiing/reviews.json", "r") as f:
-#     dataset = json.load(f)
-# with open('dataset/skiing/area_name_to_rating_and_sentiment.json', 'r') as f:
-#     area_name_to_rating_and_sentiment = json.load(f)
+class Model3(Model2):
+    def __init__(self):
+        super().__init__()
+
+    def average_sim_vect_by_area(self, sim_vect, index_to_area_name):
+        # returns a sorted list of tuples (area_name, avg score)
+        # this model only counts reviews with nonzero similarity score, unlike model 2
+        tuples = [(sim, index_to_area_name[i])
+                  for i, sim in enumerate(sim_vect)]
+        area_to_total, area_to_count = defaultdict(float), defaultdict(int)
+        for score, area in tuples:
+            if score > 0:
+                area_to_total[area] += score
+                area_to_count[area] += 1
+        unsorted = [(area, area_to_total[area]/area_to_count[area])
+                    for area in area_to_total]
+        area_name_to_score_tup_lst = self.intermediate(tuples)
+
+        def add_row_num_back(row_num, review):
+            review["row_number"] = row_num
+            return review
+        area_name_to_reviews = {
+            area_name: [add_row_num_back(
+                tup[0], self.data[str(tup[0])]) for tup in tup_lst]
+            for area_name, tup_lst in area_name_to_score_tup_lst.items()}
+        return sorted(unsorted, key=lambda x: x[1], reverse=True), area_name_to_reviews
+
+    def search(self, query, location, distance):
+        self.load_data_from_json()
+        self.mat, self.index_to_area_name = self.get_tfidf_mat_and_idx(query)
+        self.cos_sim_vect = self.build_cos_sim_vect(self.mat)
+        return self.average_sim_vect_by_area(self.cos_sim_vect, self.index_to_area_name)
+
+    def add_important_similarity_words(self, results, query, k=10):
+        # compute the big terms in the dot product of this review and query
+        # get idx from results, idx of query is 0
+        for result in results:
+            review = result['reviews'][0]
+            # we have to add one because the query is now index zero
+            idx = review['row_number'] + 1
+            row = self.tfidf[idx]
+            elem_wise_prod = np.multiply(row, self.tfidf[0])
+            words = [(elem_wise_prod[i], self.index_to_vocab[i])
+                     for i in range(len(elem_wise_prod)) if elem_wise_prod[i] > 0]
+            words = sorted(words, key=lambda x: x[0], reverse=True)[:k]
+            important_word_set = set([word for _, word in words])
+            out, i = [], 0
+
+            def tokenize_word(s):
+                x = re.sub(r'\W', ' ', s)
+                x = re.sub(r'\s+', ' ', x, flags=re.I)
+                return x.lower()
+            tokenized = review['text'].split(' ')
+            isImportant, idx = None, 0
+            for x in tokenized:
+                text_word = x.lower()
+                if ((text_word in important_word_set) and (isImportant == True)):
+                    # continue
+                    idx += 1
+                elif ((text_word not in important_word_set) and (isImportant == False)):
+                    # also continue
+                    idx += 1
+                else:
+                    if isImportant != None:
+                        out.append((isImportant, idx))
+                    isImportant = (text_word) in important_word_set
+                    idx = i
+                i += 1
+            out.append((isImportant, idx))
+            result["important_words"] = out
+        return
+
 
 with open('dataset/skiing/area_name_data.json', 'r') as f:
     area_name_data = json.load(f)
-
-
-# def get_top_reviews(area_name, isPositive):
-#     key = "top_10_positive" if isPositive else "top_10_negative"
-#     lst = area_name_to_top_sentiment[area_name][key]
-#     # list of dicts {row_number, sentiment:{}}
-#     return [{"sentiment_score": d['sentiment']["compound"], "review":dataset[d['row_number']]} for d in lst]
 
 
 def search_q(query, version, location=None, distance=None):
@@ -285,16 +350,12 @@ def search_q(query, version, location=None, distance=None):
     elif version == 2:
         assert (location is not None and distance is not None)
         model = Model2()
-        # data = search_2(query, ski_dict, location, distance)
-        # return data[:min(5, len(data))]
     else:
-        # TODO put final prototype stuff here
-        raise NotImplementedError
+        model = Model3()
 
     scores, area_name_to_sorted_reviews = model.search(
         query, location, distance)
     area_to_distance = dist.getDistanceForAreas(location)
-    # TODO: area_to_distance can be none if query location doesn't return a location
     if area_to_distance is None:
         return [{"error": True}]
     results = [{
@@ -308,10 +369,14 @@ def search_q(query, version, location=None, distance=None):
         "rating": round(float(area_name_data[area_name]['average_rating']), 2),
         "most_positive_reviews": area_name_data[area_name]['top_10_positive'],
         "most_negative_reviews": area_name_data[area_name]['top_10_negative'],
-        "emotion_numbers": {"anger": 100, "sadness": 50, "joy": 200, "love": 25, "fear": 70, "surprise": 100},
-        "emotion_reviews": {em: area_name_to_sorted_reviews[area_name][0] for em in ["anger", "sadness", "joy", "love", "fear", "surprise"]}
+        "emotion_numbers": area_name_data[area_name]['emotions'],
+        "important_words": [],
+        "query": query
     } for area_name, score in scores if area_to_distance[area_name] <= distance]
-    return results[:min(5, len(results))]
+    results = results[:min(5, len(results))]
+    if version == 3:
+        model.add_important_similarity_words(results, query)
+    return results
 
 
 # model = Model2()

@@ -19,7 +19,7 @@ def max_distance(s):
 def get_version():
     v = request.args.get('version')
     if not v:
-        return 2
+        return 3
     else:
         return int(v)
 
@@ -39,4 +39,4 @@ def search():
         output_message = "Your search: " + query
         data = search_q(query, version=version, location=location,
                         distance=d)
-    return render_template('front-end-3.html', data=data)
+    return render_template('front-end-3-mb-test.html', data=data)
