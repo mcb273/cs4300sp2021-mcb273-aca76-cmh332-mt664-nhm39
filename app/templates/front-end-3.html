@@ -377,7 +377,6 @@
 
     h4 {
       font-size: 20px;
-<<<<<<< HEAD
   }
 
   .showButton {
@@ -577,115 +576,6 @@
   @media (max-width: 400px) {
 
     .container-fluid {
-=======
-    }
-
-    .showButton {
-      background-color: lightgrey;
-      border: none;
-      border-radius: 8px;
-      color: black;
-      padding: 4px 6px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 14px;
-      margin: 4px 2px;
-      cursor: pointer;
-    }
-
-    span.stars,
-    span.stars span {
-      display: block;
-      background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/747/star-o-white.svg) 0 0 repeat-x;
-      width: 100px;
-      /* width of a star multiplied by 5 */
-      height: 20px;
-      /* the height of the star */
-      background-size: 20px 20px;
-    }
-
-    span.stars span {
-      background-position: 0 0;
-      background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/747/star.svg);
-    }
-
-    span.scores,
-    span.scores span {
-      display: block;
-      background: url(../static/circle_empty.svg) 0 0 repeat-x;
-      width: 200px;
-      /* width of a star multiplied by 5 */
-      height: 20px;
-      /* the height of the star */
-      background-size: 20px 20px;
-    }
-
-    span.scores span {
-      background-position: 0 0;
-      background-image: url(../static/circle.svg);
-    }
-
-    span.psentiment,
-    span.psentiment span {
-      display: block;
-      background: url(../static/circle_empty.svg) 0 0 repeat-x;
-      width: 200px;
-      /* width of a star multiplied by 5 */
-      height: 20px;
-      /* the height of the star */
-      background-size: 20px 20px;
-    }
-
-    span.psentiment span {
-      background-position: 0 0;
-      background-image: url(../static/circlep.svg);
-    }
-
-    span.nsentiment,
-    span.nsentiment span {
-      display: block;
-      background: url(../static/circle_empty.svg) 0 0 repeat-x;
-      width: 200px;
-      /* width of a star multiplied by 5 */
-      height: 20px;
-      /* the height of the star */
-      background-size: 20px 20px;
-    }
-
-    span.nsentiment span {
-      background-position: 0 0;
-      background-image: url(../static/circlen.svg);
-    }
-
-    .rating {
-      background-color: darkgrey;
-      border-radius: 18px;
-      border: none;
-      align-content: center;
-      width: 50%;
-    }
-
-    .sentTitle {
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 0;
-    }
-
-    .rate {
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .s {
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      width: 50%;
-    }
-
-    .sim {
->>>>>>> 9775d04d4347dabef58d32ccfe39f13d12b1403e
       display: flex;
       flex-direction: column;
       text-align: center;
@@ -1024,15 +914,9 @@
                 <div class="e_vals">
                   {% for key, value in d['emotion_numbers'].items() %}
                   {% if value > 0 %}
-<<<<<<< HEAD
                   {% with frac = (100*(value / total.start))|round(2, 'floor') %}
                   <div id= '{{key}}'><p class= 'emot' id='color'>{{key}}: {{frac}}%</p></div>
                   {% endwith %}
-=======
-                  <div id='{{key}}'>
-                    <p class='emot' id='color'>{{key}}: {{(100*(value / total.start)|round(2))}}%</p>
-                  </div>
->>>>>>> 9775d04d4347dabef58d32ccfe39f13d12b1403e
                   {% endif %}
                   {% endfor %}
                 </div>
