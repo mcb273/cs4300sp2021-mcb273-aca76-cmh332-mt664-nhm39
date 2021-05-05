@@ -534,7 +534,10 @@
   #color {
     color: black;
     font-weight: 900;
-
+    background-color: white;
+    border-radius: 9px;
+    padding: 10px;
+    opacity: .8;
   }
 
 
@@ -773,7 +776,7 @@
               <div class= 'tocenter'>
                 <div class = "e_vals">
                 {% for key, value in d['emotion_numbers'].items() %}
-                  <div id= '{{key}}'><p class= 'emot' id='color'>{{key}}: {{(100*(value / total.start)|round(2))}}</p></div>
+                  <div id= '{{key}}'><p class= 'emot' id='color'>{{key}}: {{(100*(value / total.start)|round(2))}}%</p></div>
                 {% endfor %}
                 </div>
               </div>
