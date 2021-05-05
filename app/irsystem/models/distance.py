@@ -1,6 +1,7 @@
 import json
 import requests
 from geopy.geocoders import Nominatim
+from geopy.exc import GeocoderUnavailable
 
 geolocator = Nominatim(user_agent="skiresortrecommendations")
 
@@ -36,13 +37,16 @@ with open("dataset/skiing/locations.json", "r") as f:
 
 
 def getDistanceForAreas(query):
-    loc = geolocator.geocode(query)
+    try:
+        loc = geolocator.geocode(query)
+    except GeocoderUnavailable:
+        return {"error": "The Geopy API is currently unavailable. Please try again."}
     if loc is not None:
         source = (loc.latitude, loc.longitude)
         dists = getDistance(source, locations)
         return {area_name: distance for distance, area_name in dists}
     else:
-        return None
+        return {"error": "Location could not be determined."}
 
 
 def sortAreasByDistance(area_to_distance):
@@ -51,3 +55,6 @@ def sortAreasByDistance(area_to_distance):
     # returns a sorted list of pairs (area, dist) sorted by increasing distance
     result = [(area, dist) for area, dist in area_to_distance.items()]
     return sorted(result, key=lambda x: x[1])
+
+
+print(getDistanceForAreas("neasdfasdf"))
