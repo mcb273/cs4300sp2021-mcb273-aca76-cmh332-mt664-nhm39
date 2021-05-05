@@ -490,7 +490,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 83%;
+    width: 100%;
   }
 
   .horiz {
@@ -507,7 +507,7 @@
   }
 
   #surprise {
-    background-color: purple;
+    background-color: orange;
     opacity: .8;
     padding: 3px;
     margin: 3px;
@@ -515,8 +515,8 @@
   }
 
   #sadness {
-    background-color: blue;
-    opacity: .4;
+    background-color: lightblue;
+    opacity: .8;
     padding: 3px;
     margin: 3px;
     border-radius: 18px;
@@ -541,10 +541,8 @@
   #color {
     color: black;
     font-weight: 900;
-    background-color: white;
     border-radius: 9px;
     padding: 10px;
-    opacity: .8;
   }
 
   .exp {
@@ -801,7 +799,9 @@
               <div class= 'tocenter'>
                 <div class = "e_vals">
                 {% for key, value in d['emotion_numbers'].items() %}
+                  {% if value > 0 %}
                   <div id= '{{key}}'><p class= 'emot' id='color'>{{key}}: {{(100*(value / total.start)|round(2))}}%</p></div>
+                  {% endif %}
                 {% endfor %}
                 </div>
               </div>
