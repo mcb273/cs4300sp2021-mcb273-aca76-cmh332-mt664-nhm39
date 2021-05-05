@@ -377,207 +377,6 @@
 
     h4 {
       font-size: 20px;
-<<<<<<< HEAD
-  }
-
-  .showButton {
-    background-color: lightgrey;
-    border: none;
-    border-radius: 8px;
-    color: black;
-    padding: 4px 6px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 4px 2px;
-    cursor: pointer;
-  }
-
-  span.stars, span.stars span {
-    display: block;
-    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/747/star-o-white.svg) 0 0 repeat-x;
-    width: 100px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.stars span {
-    background-position: 0 0;
-    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/747/star.svg);
-  }
-
-  span.scores, span.scores span {
-    display: block;
-    background: url(../static/circle_empty.svg) 0 0 repeat-x;
-    width: 200px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.scores span {
-    background-position: 0 0;
-    background-image: url(../static/circle.svg);
-  }
-
-  span.psentiment, span.psentiment span {
-    display: block;
-    background: url(../static/circle_empty.svg) 0 0 repeat-x;
-    width: 200px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.psentiment span {
-    background-position: 0 0;
-    max-width: 50%;
-    background-image: url(../static/circlep.svg);
-  }
-
-  span.nsentiment, span.nsentiment span {
-    display: block;
-    background: url(../static/circle_empty.svg) 0 0 repeat-x;
-    width: 200px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.nsentiment span {
-    background-position: 0 0;
-    background-image: url(../static/circlen.svg);
-  }
-
-  .rating {
-    background-color: darkgrey;
-    border-radius: 18px;
-    border: none;
-    align-content: center;
-    width: 50%;
-  }
-
-  .sentTitle {
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 0;
-  }
-
-  .rate {
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .s {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-  }
-
-  .sim {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    width: 100px;
-  }
-
-  .score {
-    font-size: 11px;
-    text-align: center;
-  }
-
-  .e_vals {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .e_container {
-    width: 100%;
-  }
-
-  .emot {
-    margin: 5px;
-  }
-
-  .tocenter {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-  }
-
-  .horiz {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .sentimentWidth {
-    min-width: 220px;
-  }
-
-  #love {
-    background-color: pink;
-    opacity: .8;
-    padding: 3px;
-    margin: 3px;
-    border-radius: 18px;
-  }
-
-  #surprise {
-    background-color: orange;
-    opacity: .8;
-    padding: 3px;
-    margin: 3px;
-    border-radius: 18px;
-  }
-
-  #sadness {
-    background-color: lightblue;
-    opacity: .8;
-    padding: 3px;
-    margin: 3px;
-    border-radius: 18px;
-  }
-
-  #anger {
-    background-color: red;
-    opacity: .8;
-    padding: 3px;
-    margin: 3px;
-    border-radius: 18px;
-  }
-
-  #joy {
-    background-color: yellow;
-    opacity: .8;
-    padding: 3px;
-    margin: 3px;
-    border-radius: 18px;
-  }
-
-  #color {
-    color: black;
-    font-weight: 900;
-    border-radius: 9px;
-    padding: 7px;
-  }
-
-  .exp {
-    margin-bottom: 2px;;
-    padding: 0;
-    font-size: 10px;
-  }
-
-  .sentDiv {
-    display: flex;
-    flex-direction: column;
-  }
-
-
-  @media (max-width: 400px) {
-
-    .container-fluid {
-=======
     }
 
     .showButton {
@@ -639,6 +438,7 @@
 
     span.psentiment span {
       background-position: 0 0;
+      max-width: 50%;
       background-image: url(../static/circlep.svg);
     }
 
@@ -685,7 +485,6 @@
     }
 
     .sim {
->>>>>>> 9775d04d4347dabef58d32ccfe39f13d12b1403e
       display: flex;
       flex-direction: column;
       text-align: center;
@@ -700,6 +499,7 @@
     .e_vals {
       display: flex;
       flex-direction: row;
+      flex-wrap: wrap;
     }
 
     .e_container {
@@ -707,7 +507,7 @@
     }
 
     .emot {
-      margin: 10px;
+      margin: 5px;
     }
 
     .tocenter {
@@ -720,6 +520,10 @@
     .horiz {
       display: flex;
       flex-direction: row;
+    }
+
+    .sentimentWidth {
+      min-width: 220px;
     }
 
     #love {
@@ -766,7 +570,7 @@
       color: black;
       font-weight: 900;
       border-radius: 9px;
-      padding: 10px;
+      padding: 7px;
     }
 
     .exp {
@@ -787,10 +591,109 @@
       .container-fluid {
         display: flex;
         flex-direction: column;
-        align-content: center;
+        text-align: center;
+        width: 100px;
       }
 
-    }
+      .score {
+        font-size: 11px;
+        text-align: center;
+      }
+
+      .e_vals {
+        display: flex;
+        flex-direction: row;
+      }
+
+      .e_container {
+        width: 100%;
+      }
+
+      .emot {
+        margin: 10px;
+      }
+
+      .tocenter {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
+      }
+
+      .horiz {
+        display: flex;
+        flex-direction: row;
+      }
+
+      #love {
+        background-color: pink;
+        opacity: .8;
+        padding: 3px;
+        margin: 3px;
+        border-radius: 18px;
+      }
+
+      #surprise {
+        background-color: orange;
+        opacity: .8;
+        padding: 3px;
+        margin: 3px;
+        border-radius: 18px;
+      }
+
+      #sadness {
+        background-color: lightblue;
+        opacity: .8;
+        padding: 3px;
+        margin: 3px;
+        border-radius: 18px;
+      }
+
+      #anger {
+        background-color: red;
+        opacity: .8;
+        padding: 3px;
+        margin: 3px;
+        border-radius: 18px;
+      }
+
+      #joy {
+        background-color: yellow;
+        opacity: .8;
+        padding: 3px;
+        margin: 3px;
+        border-radius: 18px;
+      }
+
+      #color {
+        color: black;
+        font-weight: 900;
+        border-radius: 9px;
+        padding: 10px;
+      }
+
+      .exp {
+        margin-bottom: 2px;
+        ;
+        padding: 0;
+        font-size: 10px;
+      }
+
+      .sentDiv {
+        display: flex;
+        flex-direction: column;
+      }
+
+
+      @media (max-width: 400px) {
+
+        .container-fluid {
+          display: flex;
+          flex-direction: column;
+          align-content: center;
+        }
+
+      }
   </style>
 
   <script>
@@ -1024,15 +927,13 @@
                 <div class="e_vals">
                   {% for key, value in d['emotion_numbers'].items() %}
                   {% if value > 0 %}
-<<<<<<< HEAD
-                  {% with frac = (100*(value / total.start))|round(2, 'floor') %}
-                  <div id= '{{key}}'><p class= 'emot' id='color'>{{key}}: {{frac}}%</p></div>
-                  {% endwith %}
-=======
-                  <div id='{{key}}'>
-                    <p class='emot' id='color'>{{key}}: {{(100*(value / total.start)|round(2))}}%</p>
+                  {% with frac=(100*(value / total.start))|round(2, 'floor' ) %} <div id='{{key}}'>
+                    <p class='emot' id='color'>{{key}}: {{frac}}%</p>
                   </div>
->>>>>>> 9775d04d4347dabef58d32ccfe39f13d12b1403e
+                  {% endwith %}
+                  <!-- <div id='{{key}}'>
+                    <p class='emot' id='color'>{{key}}: {{(100*(value / total.start)|round(2))}}%</p>
+                  </div> -->
                   {% endif %}
                   {% endfor %}
                 </div>
