@@ -261,7 +261,6 @@ class Model2:
             area_name: [add_row_num_back(
                 tup[0], self.data[str(tup[0])]) for tup in tup_lst if str(tup[0]) in self.data]  # TODO figure out what to do with reviews that no longer exist
             for area_name, tup_lst in area_name_to_score_tup_lst.items()}
-        # print(area_name_to_reviews)
         return sorted(unsorted, key=lambda x: x[1], reverse=True), area_name_to_reviews
 
     def search(self, query, location, distance):
@@ -392,7 +391,6 @@ def search_q(query, version, location=None, distance=None):
         query, location, distance)
     area_to_distance = dist.getDistanceForAreas(location)
     if "error" in area_to_distance.keys():
-        print(area_to_distance)
         return area_to_distance
     results = [{
         "version": version,
@@ -411,23 +409,9 @@ def search_q(query, version, location=None, distance=None):
         "query": query
     } for area_name, score in scores if area_to_distance[area_name] <= distance or distance == 1000]
     results = results[:min(5, len(results))]
-    # print(results[0]['reviews'][0])
     if version == 3:
         model.add_important_similarity_words(results, query)
-    # for i in range(5):
-    print(results[0]['important_words'])
     if results == []:
         x = {"error": "Your search did not return any results. Try expanding your location range or changing your query."}
-        print(x)
         return x
     return results
-
-
-# model = Model2()
-# model.load_data_from_json()
-# query = "big mountain on the east coast with friendly staff"
-# mat, index_to_vocab, vocab_to_index, index_to_area_name = model.get_tfidf_mat_and_idx(
-#     query)
-# cos_sim_vect = model.build_cos_sim_vect(mat)
-# results = model.average_sim_vect_by_area(cos_sim_vect, index_to_area_name)
-# print(results[:5])
