@@ -216,7 +216,8 @@ class Model2:
                                   row_num in enumerate(self.data)}
         # index_to_area_name = { for row_num, _ in self.data}
         corpus = [query] + reviews
-        mat = vectorizer.fit_transform(corpus).toarray()
+        # mat = vectorizer.fit_transform(corpus).toarray()
+        mat = vectorizer.fit_transform(corpus)
         self.index_to_vocab = {i: v for i, v in enumerate(
             vectorizer.get_feature_names())}
         self.tfidf = mat
@@ -225,11 +226,28 @@ class Model2:
     def build_cos_sim_vect(self, tfidf):
         query_row = tfidf[0]
         trans = np.transpose(tfidf)
-        num = np.matmul(query_row, trans)
-        norm = np.sqrt(np.sum(np.square(tfidf), axis=1))
+        print("query row", query_row.shape)
+        print("trans", trans.shape)
+
+        # num = np.matmul(query_row, trans)
+        num = query_row.dot(trans)
+        print("num", num.shape)
+
+        # norm = np.sqrt(np.sum(np.square(tfidf), axis=1))
+        norm = np.sqrt(tfidf.power(2).sum(axis=1))
+        print("norm", norm.shape)
+
         # replace norms=0 with 1, since the numerator is zero anyway
         norm[norm == 0] = 1
-        result = (num/norm)[1:]
+        print("norm2", norm.shape)
+        norm = norm.transpose()
+        print("norm3", norm.shape)
+        result = (num/norm)
+        result = result.transpose()
+        result = result[1:]
+        print("result", result.shape, type(result))
+        result = np.squeeze(np.asarray(result))
+        print("result2", result.shape, type(result))
         return result
 
     def intermediate(self, tuples):
@@ -342,7 +360,18 @@ class Model3(Model2):
 
             idx = self.review_num_to_idx[review["row_number"]] + 1
             row = self.tfidf[idx]
-            elem_wise_prod = np.multiply(row, self.tfidf[0])
+
+            print(row.shape, self.tfidf[0].shape)
+
+            # row = np.squeeze(row.toarray())
+            # x = np.squeeze(self.tfidf[0].toarray())
+            # print(row.shape, x.shape)
+            # elem_wise_prod = np.multiply(row, self.tfidf[0])
+            x = self.tfidf[0]
+            elem_wise_prod = row.multiply(x)
+            elem_wise_prod = np.squeeze(elem_wise_prod.transpose().toarray())
+            print(elem_wise_prod.shape)
+            # elem_wise_prod = np.multiply(row, self.tfidf[0])
             words = [(elem_wise_prod[i], self.index_to_vocab[i])
                      for i in range(len(elem_wise_prod)) if elem_wise_prod[i] > 0]
             words = sorted(words, key=lambda x: x[0], reverse=True)[:k]

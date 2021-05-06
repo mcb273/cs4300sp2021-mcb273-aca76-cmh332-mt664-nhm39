@@ -13,7 +13,7 @@ def getCoordinates(query):
 
 def getLocations():
     with open("dataset/skiing/reviews.json", "r") as f:
-        with open("app/irsystem/models/locations.json", "w") as locations_file:
+        with open("app/irsystem/models/locations.json", "w") as locations_file:  # TODO change path
             with open("dataset/skiing/manualqueries.json", "r") as f2:
                 corrections = json.load(f2)
                 locations = {}
