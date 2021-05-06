@@ -423,14 +423,15 @@ def search_q(query, version, location=None, distance=None):
 
     scores, area_name_to_sorted_reviews = model.search(
         query, location, distance)
-    area_to_distance = dist.getDistanceForAreas(location)
-    if "error" in area_to_distance.keys():
-        return area_to_distance
+    # area_to_distance = dist.getDistanceForAreas(location)
+    # if "error" in area_to_distance.keys():
+    #     return area_to_distance
     results = [{
         "version": version,
         "area_name": area_name,
         "state": area_name_data[area_name]["state"],
-        "distance":round(area_to_distance[area_name]),
+        # "distance":round(area_to_distance[area_name]),
+        "distance": 0,
         "score": round(score*100, 2),
         "reviews": area_name_to_sorted_reviews[area_name][:3],
         "sentiment": round(float(area_name_data[area_name]['average_sentiment']), 2),
@@ -441,7 +442,8 @@ def search_q(query, version, location=None, distance=None):
         "important_words": [],
         "number_of_reviews": area_name_data[area_name]['number_of_reviews'],
         "query": query
-    } for area_name, score in scores if area_to_distance[area_name] <= distance or distance == 1000]
+        # } for area_name, score in scores if area_to_distance[area_name] <= distance or distance == 1000]
+    } for area_name, score in scores]
     results = results[:min(5, len(results))]
     if version == 3:
         model.add_important_similarity_words(results, query)

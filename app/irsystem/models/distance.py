@@ -20,11 +20,15 @@ def getDistance(source, locs):
     # returns a list of tuples (distance from source, area name)
     url = "http://router.project-osrm.org/table/v1/driving/" + \
         locToUrl(source)
-    for loc in locs:
+    for loc in locs[:1]:
         url += ";"
         url += locToUrl(loc)
     url += "?sources=0&annotations=distance"
+    # url = "http://router.project-osrm.org/table/v1/driving/13.388860,52.517037;13.397634,52.529407;13.428555,52.523219"
+    # url = "http://router.project-osrm.org/route/v1/driving/13.388860,52.517037;13.397634,52.529407;13.428555,52.523219?overview=false"
+    # print(url)
     r = requests.get(url)
+    # print(r)
     d = json.loads(r.text)
     distances = d['distances'][0][1:]
     return [(metersToMiles(distances[i]), locs[i][2]) for i in range(len(locs))]
@@ -43,6 +47,7 @@ def getDistanceForAreas(query):
         return {"error": "The Geopy API is currently unavailable. Please try again."}
     if loc is not None:
         source = (loc.latitude, loc.longitude)
+        print(source)
         try:
             dists = getDistance(source, locations)
         except json.JSONDecodeError:
@@ -60,4 +65,4 @@ def sortAreasByDistance(area_to_distance):
     return sorted(result, key=lambda x: x[1])
 
 
-# print(getDistanceForAreas("neasdfasdf"))
+# print(getDistanceForAreas("New York, New York"))

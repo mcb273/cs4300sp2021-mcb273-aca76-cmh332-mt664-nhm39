@@ -844,6 +844,10 @@
         {% elif data %}
         <!-- <div id="results" class=''> -->
         <h4 style="font-weight: bold;">Where You Should Spend Your Mountain Time:</h4>
+        <h4 style="font-weight: bold; color: red;">NOTE: The external API that we use to calculate distance is currently
+          down, so we
+          are not currently taking distance into account with the following results. We will re-include the distance
+          parameter when the API is back up.</h4>
 
         {% for d in data %}
         {% if d['version'] == 2 or d['version'] == 3 %}
