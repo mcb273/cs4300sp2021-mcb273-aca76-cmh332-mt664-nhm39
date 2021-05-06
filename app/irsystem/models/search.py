@@ -233,12 +233,11 @@ class Model2:
         return result
 
     def intermediate(self, tuples):
-        # list of pairs (score, area_name)
-        # returns { area_name: sorted list of pairs (review_id, score) }
         result = defaultdict(list)
-        for score, area_name, idx in tuples:
-            result[area_name].append((list(self.data.keys())[idx], score))
-            # i += 1
+        i = 0
+        for score, area_name in tuples:
+            result[area_name].append((i, score))
+            i += 1
         for area_name in result:
             result[area_name].sort(key=lambda x: x[1], reverse=True)
         return result
@@ -293,6 +292,17 @@ class Model3(Model2):
             print("normalized:", x[i])
             print("weighted:", y[i], "\n\n")
         return lst
+
+    def intermediate(self, tuples):
+        # list of pairs (score, area_name)
+        # returns { area_name: sorted list of pairs (review_id, score) }
+        result = defaultdict(list)
+        for score, area_name, idx in tuples:
+            result[area_name].append((list(self.data.keys())[idx], score))
+            # i += 1
+        for area_name in result:
+            result[area_name].sort(key=lambda x: x[1], reverse=True)
+        return result
 
     def average_sim_vect_by_area(self, sim_vect, index_to_area_name):
         # returns a sorted list of tuples (area_name, avg score)

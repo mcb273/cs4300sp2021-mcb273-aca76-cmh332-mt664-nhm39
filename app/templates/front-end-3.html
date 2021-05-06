@@ -377,207 +377,6 @@
 
     h4 {
       font-size: 20px;
-<<<<<<< HEAD
-  }
-
-  .showButton {
-    background-color: lightgrey;
-    border: none;
-    border-radius: 8px;
-    color: black;
-    padding: 4px 6px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 4px 2px;
-    cursor: pointer;
-  }
-
-  span.stars, span.stars span {
-    display: block;
-    background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/747/star-o-white.svg) 0 0 repeat-x;
-    width: 100px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.stars span {
-    background-position: 0 0;
-    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/747/star.svg);
-  }
-
-  span.scores, span.scores span {
-    display: block;
-    background: url(../static/circle_empty.svg) 0 0 repeat-x;
-    width: 200px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.scores span {
-    background-position: 0 0;
-    background-image: url(../static/circle.svg);
-  }
-
-  span.psentiment, span.psentiment span {
-    display: block;
-    background: url(../static/circle_empty.svg) 0 0 repeat-x;
-    width: 200px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.psentiment span {
-    background-position: 0 0;
-    max-width: 50%;
-    background-image: url(../static/circlep.svg);
-  }
-
-  span.nsentiment, span.nsentiment span {
-    display: block;
-    background: url(../static/circle_empty.svg) 0 0 repeat-x;
-    width: 200px; /* width of a star multiplied by 5 */
-    height: 20px; /* the height of the star */
-    background-size: 20px 20px;
-  }
-
-  span.nsentiment span {
-    background-position: 0 0;
-    background-image: url(../static/circlen.svg);
-  }
-
-  .rating {
-    background-color: darkgrey;
-    border-radius: 18px;
-    border: none;
-    align-content: center;
-    width: 50%;
-  }
-
-  .sentTitle {
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 0;
-  }
-
-  .rate {
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .s {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-  }
-
-  .sim {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    width: 100px;
-  }
-
-  .score {
-    font-size: 11px;
-    text-align: center;
-  }
-
-  .e_vals {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-  }
-
-  .e_container {
-    width: 100%;
-  }
-
-  .emot {
-    margin: 5px;
-  }
-
-  .tocenter {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 100%;
-  }
-
-  .horiz {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .sentimentWidth {
-    min-width: 220px;
-  }
-
-  #love {
-    background-color: pink;
-    opacity: .8;
-    padding: 3px;
-    margin: 3px;
-    border-radius: 18px;
-  }
-
-  #surprise {
-    background-color: orange;
-    opacity: .8;
-    padding: 3px;
-    margin: 3px;
-    border-radius: 18px;
-  }
-
-  #sadness {
-    background-color: lightblue;
-    opacity: .8;
-    padding: 3px;
-    margin: 3px;
-    border-radius: 18px;
-  }
-
-  #anger {
-    background-color: red;
-    opacity: .8;
-    padding: 3px;
-    margin: 3px;
-    border-radius: 18px;
-  }
-
-  #joy {
-    background-color: yellow;
-    opacity: .8;
-    padding: 3px;
-    margin: 3px;
-    border-radius: 18px;
-  }
-
-  #color {
-    color: black;
-    font-weight: 900;
-    border-radius: 9px;
-    padding: 7px;
-  }
-
-  .exp {
-    margin-bottom: 2px;;
-    padding: 0;
-    font-size: 10px;
-  }
-
-  .sentDiv {
-    display: flex;
-    flex-direction: column;
-  }
-
-
-  @media (max-width: 400px) {
-
-    .container-fluid {
-=======
     }
 
     .showButton {
@@ -686,7 +485,6 @@
     }
 
     .sim {
->>>>>>> 5031ac0fc9cba77f6f360cc47cc738472f1d4b10
       display: flex;
       flex-direction: column;
       text-align: center;
@@ -1095,49 +893,6 @@
               <!-- </div> -->
             </div>
 
-<<<<<<< HEAD
-          <div class="result-row">
-            <div class="emotion e_container number-container">
-              {% set total=namespace(start=0) %}
-              {% for key, value in d['emotion_numbers'].items() %}
-              {% set total.start=total.start+value %}
-              {% endfor %}
-
-              {% if total.start > 0 %}
-              {% set love=namespace(start=0) %}
-              {% set surprise=namespace(start=0) %}
-              {% set sadness=namespace(start=0) %}
-              {% set anger=namespace(start=0) %}
-              {% set joy=namespace(start=0) %}
-              {% for key, value in d['emotion_numbers'].items() %}
-              {% if key == 'love' %}
-              {% set love.start=love.start+(100*(value / total.start)|round(2)) %}
-              {% endif %}
-              {% if key == 'surprise' %}
-              {% set surprise.start=surprise.start+(100*(value / total.start)|round(2)) %}
-              {% endif %}
-              {% if key == 'sadness' %}
-              {% set sadness.start=sadness.start+(100*(value / total.start)|round(2)) %}
-              {% endif %}
-              {% if key == 'anger' %}
-              {% set anger.start=anger.start+(100*(value / total.start)|round(2)) %}
-              {% endif %}
-              {% if key == 'joy' %}
-              {% set joy.start=joy.start+(100*(value / total.start)|round(2)) %}
-              {% endif %}
-              {% endfor %}
-              {% endif %}
-
-              <div class='tocenter'>
-                <div class="e_vals">
-                  {% for key, value in d['emotion_numbers'].items() %}
-                  {% if value > 0 %}
-                  {% with frac = (100*(value / total.start))|round(2, 'floor') %}
-                  <div id= '{{key}}'><p class= 'emot' id='color'>{{key}}: {{frac}}%</p></div>
-                  {% endwith %}
-                  {% endif %}
-                  {% endfor %}
-=======
             <div class="result-row">
               <div class="emotion e_container number-container">
                 {% set total=namespace(start=0) %}
@@ -1184,7 +939,6 @@
                     {% endif %}
                     {% endfor %}
                   </div>
->>>>>>> 5031ac0fc9cba77f6f360cc47cc738472f1d4b10
                 </div>
 
               </div>
@@ -1196,25 +950,15 @@
                 <p class="score">Score: {{d['score']}}</p>
               </div>
               <div class="pandn">
-
-                <!-- <button onclick="showSimReviews(this)" class= 'showButton'>Show Similar Reviews</button>
-                <div id= "sr" style= 'display: none;'> -->
-                <!-- {{ d["reviews"][0]['text'] }} -->
-                <!-- </div> -->
-
-
-                <!-- {{ d["reviews"][0]['text'] }} -->
-                              
-                <!-- {% set start=0 %} -->
                 {% set ns=namespace(start=0) %}
                 {% set processed = d['reviews'][0]['text'].split(' ') %}
 
                 {% for isImportant, upToIdx in d['important_words'] %}
                 {% set s = " ".join(processed[ns.start:upToIdx+1]) %}
                 {% if isImportant %}
-                <span style="font-weight:bold; color: blue;">{{ s }}</span>
+                <span style="font-weight:bold; color: blue;">{{s}}</span>
                 {% else %}
-                {{ s }}
+                {{s}}
                 {% endif %}
                 {% set ns.start=upToIdx+1 %}
                 {% endfor %}
@@ -1224,8 +968,6 @@
             <div class="result-row">
               <p class="title">Positive Reviews</p>
               <div class="pandn">
-                <!-- <button onclick="showPosReviews()" class= 'showButton'>Show Positive Reviews</button>
-                <div class= "pr" style= 'display: none;'> -->
                 {% for i in d["most_positive_reviews"] %}
                 <p
                   style="font-weight: bold; text-decoration: underline; font-style: italic; margin-top: 10px; margin-bottom: 20px;">
@@ -1234,15 +976,12 @@
                 i['review']['text']
                 }}
                 {% endfor %}
-                <!-- </div> -->
               </div>
             </div>
 
             <div class="result-row">
               <p class="title">Negative Reviews</p>
               <div class="pandn">
-                <!-- <button onclick="showNegReviews()" class= 'showButton' id= "{{d['most_negative_reviews']['row_number']}}">Show Negative Reviews</button>
-                <div id= "{{d}}" style= 'display: none;'> -->
                 {% for i in d["most_negative_reviews"] %}
                 <p
                   style="font-weight: bold; text-decoration: underline; font-style: italic; margin-top: 10px; margin-bottom: 20px;">
@@ -1251,7 +990,6 @@
                 i['review']['text']
                 }}
                 {% endfor %}
-                <!-- </div> -->
               </div>
             </div>
 
