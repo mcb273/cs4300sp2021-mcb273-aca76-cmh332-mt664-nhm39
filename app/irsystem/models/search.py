@@ -18,6 +18,7 @@ from nltk.tokenize import TreebankWordTokenizer
 
 # Citation note: CS4300 Assignments were used as a reference when writing code
 # for this project, such as our computation of the cosine similarity matrix.
+# SKI RESORT REVIEW DATA SET FROM: https://www.kaggle.com/fredkellner/onthesnow-ski-area-reviews
 
 
 def write_csv_to_json(csv_path="dataset/skiing/reviews.csv", json_path="dataset/skiing/reviews.json"):
