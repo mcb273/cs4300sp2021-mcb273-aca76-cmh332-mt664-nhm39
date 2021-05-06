@@ -24,6 +24,10 @@ def load_training_data(path='dataset/mldata/train.txt'):
     df = pd.read_csv(path, sep=";", header=None)
     df.columns = ["features", "labels"]
     return df
+# CODE FOR PREPROCESSING AND CLASSIFYING AND TRAINING MODEL ML
+# WAS ADAPTED FROM https://stackabuse.com/python-for-nlp-sentiment-analysis-with-scikit-learn/
+# WE DO NOT CLAIM THAT THIS IS ALL CODE WRITTEN SOLEY BY US; WE APPLIED FORM AND FUNCTION TO A NEW DATASET 
+# DATASET SOURCED FROM https://www.kaggle.com/praveengovi/emotions-dataset-for-nlp
 
 # Process training dataset
 # Takes pd dataframe returned by load_training_data()
@@ -35,7 +39,8 @@ def extract_training_data(df, hasLabels=True):
     labels = df["labels"].values if hasLabels else None
 
     processed_features = []
-
+    #REG EX FOR PRE PROCESSING FROM https://stackabuse.com/python-for-nlp-sentiment-analysis-with-scikit-learn/
+   
     for sentence in range(0, len(features)):
         # Remove all the special characters
         processed_feature = re.sub(r'\W', ' ', str(features[sentence]))
