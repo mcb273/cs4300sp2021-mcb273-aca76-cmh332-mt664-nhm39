@@ -16,6 +16,10 @@ from nltk.tokenize import TreebankWordTokenizer
 # import distance as dist
 
 
+# Citation note: CS4300 Assignments were used as a reference when writing code
+# for this project, such as our computation of the cosine similarity matrix.
+
+
 def write_csv_to_json(csv_path="dataset/skiing/reviews.csv", json_path="dataset/skiing/reviews.json"):
     with open(csv_path, "r") as f:
         with open(json_path, "w") as j:
@@ -226,28 +230,28 @@ class Model2:
     def build_cos_sim_vect(self, tfidf):
         query_row = tfidf[0]
         trans = np.transpose(tfidf)
-        print("query row", query_row.shape)
-        print("trans", trans.shape)
+        # print("query row", query_row.shape)
+        # print("trans", trans.shape)
 
         # num = np.matmul(query_row, trans)
         num = query_row.dot(trans)
-        print("num", num.shape)
+        # print("num", num.shape)
 
         # norm = np.sqrt(np.sum(np.square(tfidf), axis=1))
         norm = np.sqrt(tfidf.power(2).sum(axis=1))
-        print("norm", norm.shape)
+        # print("norm", norm.shape)
 
         # replace norms=0 with 1, since the numerator is zero anyway
         norm[norm == 0] = 1
-        print("norm2", norm.shape)
+        # print("norm2", norm.shape)
         norm = norm.transpose()
-        print("norm3", norm.shape)
+        # print("norm3", norm.shape)
         result = (num/norm)
         result = result.transpose()
         result = result[1:]
-        print("result", result.shape, type(result))
+        # print("result", result.shape, type(result))
         result = np.squeeze(np.asarray(result))
-        print("result2", result.shape, type(result))
+        # print("result2", result.shape, type(result))
         return result
 
     def intermediate(self, tuples):
@@ -361,7 +365,7 @@ class Model3(Model2):
             idx = self.review_num_to_idx[review["row_number"]] + 1
             row = self.tfidf[idx]
 
-            print(row.shape, self.tfidf[0].shape)
+            # print(row.shape, self.tfidf[0].shape)
 
             # row = np.squeeze(row.toarray())
             # x = np.squeeze(self.tfidf[0].toarray())
@@ -370,13 +374,13 @@ class Model3(Model2):
             x = self.tfidf[0]
             elem_wise_prod = row.multiply(x)
             elem_wise_prod = np.squeeze(elem_wise_prod.transpose().toarray())
-            print(elem_wise_prod.shape)
+            # print(elem_wise_prod.shape)
             # elem_wise_prod = np.multiply(row, self.tfidf[0])
             words = [(elem_wise_prod[i], self.index_to_vocab[i])
                      for i in range(len(elem_wise_prod)) if elem_wise_prod[i] > 0]
             words = sorted(words, key=lambda x: x[0], reverse=True)[:k]
             important_word_set = set([word for _, word in words])
-            print(important_word_set)
+            # print(important_word_set)
             out, i = [], 0
 
             def tokenize_word(s):
